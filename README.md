@@ -13,3 +13,13 @@ telephone_personne(pk fk int id_personne, varchar num)
 fonction_personne(pk fk int id_personne,pk fk int id_fonction)
 fonction(pk int id,varchar libelle)
 
+## Arborescence du projet : 
+webdirectory
+ - core
+   - backend project
+ - admin
+   - frontend+backend php
+ - web
+   - javascript project
+ - app
+   - flutter project 
