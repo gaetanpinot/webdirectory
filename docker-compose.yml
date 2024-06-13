@@ -1,0 +1,47 @@
+networks:
+  webdir.net:
+    driver: bridge
+services:
+  core:
+    image: canals/php:latest
+    volumes:
+      - ./web/:/var/www/html
+      - ./core/src:/var/www/src
+    working_dir: /var/www/src
+    ports:
+      - "44000:80"
+    networks:
+      - webdir.net
+
+  admin:
+    image: canals/php:latest
+    volumes:
+      - ./admin/public:/var/www/html
+      - ./core/src:/var/www/src
+    working_dir: /var/www/src
+    ports:
+      - "44003:80"
+    networks:
+      - webdir.net
+
+  sql:
+    image: mariadb:latest
+    #/!\ Requiert un fichier .env avec les variables suivantes:
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "44001:3306"
+    networks:
+      webdir.net:
+        aliases:
+          - webdir.db
+  adminer:
+    image: adminer:latest
+    command: php -S 0.0.0.0:8080 -t /var/www/html
+    ports:
+      - "44002:8080"
+    networks:
+      - webdir.net
+

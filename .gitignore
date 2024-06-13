@@ -45,8 +45,11 @@ app.*.map.json
 
 ./generateSqlRow.py
 gtest*
+.env
 
 #php
 composer.phar
 composer.lock
 vendor
+
+
