@@ -8,7 +8,6 @@ use web\api\core\services\entries\AnnuaireService;
 
 class GetPersonne extends AbstractAction
 {
-
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $annuaireServ = new AnnuaireService();
