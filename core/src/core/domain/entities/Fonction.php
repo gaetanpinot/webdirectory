@@ -10,7 +10,7 @@ class Fonction extends Model
     public $incrementing = true;
 //fonction(pk int id,varchar libelle)
 
-    public function personne(){
+    public function personnes(){
         return $this->belongsToMany('web\api\core\domain\entities\Personne','fonction_personne','id_fonction','id_personne');
     }
 }

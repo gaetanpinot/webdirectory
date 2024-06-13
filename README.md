@@ -1,6 +1,10 @@
 # webdirectory
 Sae 4.01 KOLER PINOT PRYKHODKO TERRAS
 
+## Setup
+Créer le fichier .env à la racine du docker-compose.yml, il contient le mot de passe root de la base de donnée et le login de l'utilisateur (attention par défaut l'utilisateur n'a pas de droit)  
+Créer le fichier `webdir.db.conf.ini.dist` dans le dossier conf de core sur la base du fichier existant pour preciser le login et le mot de passe que eloquent utilise pour la base de donnée  
+Créer la base de donnée webdir sur adminer avec le fichier lignes.sql  
 
 ## SQL
 
