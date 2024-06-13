@@ -3,7 +3,15 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+
+DROP TABLE IF EXISTS `personne_service`;
+DROP TABLE IF EXISTS `telephone_personne`;
+DROP TABLE IF EXISTS `fonction_personne`;
+DROP TABLE IF EXISTS `admin_user`;
 DROP TABLE IF EXISTS `personne`;
+DROP TABLE IF EXISTS `fonction`;
+DROP TABLE IF EXISTS `service`;
+
 CREATE TABLE `personne`(
 	`id` int PRIMARY KEY AUTO_INCREMENT,
 	`nom` varchar(128) NOT NULL,
@@ -13,13 +21,11 @@ CREATE TABLE `personne`(
 	`url_img` varchar(1024)
 );
 
-DROP TABLE IF EXISTS `fonction`;
 CREATE TABLE `fonction`(
 	`id` int PRIMARY KEY AUTO_INCREMENT,
 	`libelle` varchar(128) NOT NULL
 );
 
-DROP TABLE IF EXISTS `service`;
 CREATE TABLE `service`(
 	`id` int PRIMARY KEY AUTO_INCREMENT,
 	`libelle` varchar(128) NOT NULL,
@@ -27,7 +33,6 @@ CREATE TABLE `service`(
 	`description` text
 );
 
-DROP TABLE IF EXISTS `personne_service`;
 CREATE TABLE `personne_service`(
 	`id_personne` int ,
 	`id_service` int ,
@@ -36,14 +41,13 @@ CREATE TABLE `personne_service`(
 	FOREIGN KEY (`id_service`) REFERENCES `service`(`id`)
 );
 
-DROP TABLE IF EXISTS `telephone_personne`;
 CREATE TABLE `telephone_personne`(
-	`id_personne` int PRIMARY KEY,
+	`id_personne` int ,
 	`num` varchar(128) ,
+	PRIMARY KEY (`id_personne`,`num`),
 	FOREIGN KEY (`id_personne`) REFERENCES `personne`(`id`)
 );
 
-DROP TABLE IF EXISTS `fonction_personne`;
 CREATE TABLE `fonction_personne`(
 	`id_personne` int ,
 	`id_fonction` int ,
@@ -52,7 +56,6 @@ CREATE TABLE `fonction_personne`(
 	FOREIGN KEY (`id_fonction`) REFERENCES `fonction`(`id`)
 );
 
-DROP TABLE IF EXISTS `admin_user`;
 CREATE TABLE `admin_user`(
 	`id` varchar(128) PRIMARY KEY,
 	`username` varchar(128) UNIQUE,
