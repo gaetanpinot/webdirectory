@@ -122,4 +122,16 @@ class AnnuaireService implements AnnuaireServiceInterface
 
         }
     }
+
+    public function getPersonnesContainName(string $name)
+    {
+        try{
+            $personnes=Personne::where('nom','like','%'.$name.'%')->get();
+            return $personnes->toArray();
+        }catch (QueryException $e){
+
+        }catch (ModelNotFoundException $e){
+
+        }
+    }
 }
