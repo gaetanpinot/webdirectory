@@ -9,7 +9,6 @@ use web\api\infrastructure\Eloquent;
 
 Eloquent::init(__DIR__ . '/../conf/gift.db.conf.ini.dist');
 
-
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
@@ -19,6 +18,5 @@ $twig=Twig::create(__DIR__.'/../templates',
     ['auto_reload'=> true]);
 
 $app->add(TwigMiddleware::create($app,$twig));
-
 
 return($app);
