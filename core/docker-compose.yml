@@ -1,0 +1,35 @@
+
+networks:
+  giftbox.net:
+    driver: bridge
+services:
+  phpc:
+    image: canals/php:latest
+    volumes:
+      - ./public:/var/www/html
+      - ./src:/var/www/src
+      - ./shared/img:/var/www/shared/img
+    working_dir: /var/www/src
+    ports:
+      - "3080:80"
+    networks:
+      - giftbox.net
+  sql:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+    ports:
+      - "3380:3306"
+    networks:
+      giftbox.net:
+        aliases:
+          - sql.db
+          - giftbox.db
+  adminer:
+    image: adminer:latest
+    ports:
+      - "3333:8080"
+    networks:
+      - giftbox.net
