@@ -10,4 +10,5 @@ interface AnnuaireServiceInterface
     public function getPersonneById(int $id): Personne;
     public function getServiceById(int $id): Service;
     public function getTelephoneByPersonne(int $idPers): array;
+
 }
