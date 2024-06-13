@@ -2,6 +2,7 @@
 
 namespace web\api\core\services\entries;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use web\api\core\domain\entities\Fonction;
 use web\api\core\domain\entities\Personne;
 use web\api\core\domain\entities\Service;
@@ -71,6 +72,54 @@ class AnnuaireService implements AnnuaireServiceInterface
         } catch (ModelNotFoundException $e) {
 //            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
             //TODO Exception
+        }
+    }
+
+    public function getServices()
+    {
+        try{
+            $services = Service::get();
+
+            return($services->toArray());
+
+        }catch (QueryException $e ){
+
+
+        }
+    }
+
+    public function getFonctions()
+    {
+        try{
+            $fonction = Fonction::get();
+
+            return $fonction->toArray();
+        }catch(QueryException $e){
+
+        }
+    }
+
+    public function getPersonnesWithServices(){
+        try{
+            $personnes=Personne::with('service')->get();
+            return $personnes->toArray();
+        }catch (QueryException $e){
+
+        }
+    }
+
+
+    public function getPersonnesByServices(mixed $id)
+    {
+        try{
+            $personnes=Personne::whereHas('services',function($query) use($id){
+                $query->where('id','=',$id);
+            });
+            return $personnes->toArray();
+        }catch (QueryException $e){
+
+        }catch (ModelNotFoundException $e){
+
         }
     }
 }
