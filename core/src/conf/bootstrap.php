@@ -1,5 +1,11 @@
 <?php
 
+namespace web\api\conf;
+
+use Slim\Factory\AppFactory;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
+use web\api\infrastructure\Eloquent;
 
 Eloquent::init(__DIR__ . '/../conf/gift.db.conf.ini.dist');
 

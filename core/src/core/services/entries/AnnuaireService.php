@@ -1,5 +1,7 @@
 <?php
 
+namespace web\api\core\services\entries;
+
 class AnnuaireService implements AnnuaireServiceInterface
 {
 

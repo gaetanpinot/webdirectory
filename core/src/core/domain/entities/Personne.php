@@ -1,6 +1,8 @@
 <?php
 
-class Personne extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class Personne extends Model
 {
     protected $table = 'personne';
     protected $primaryKey = 'id';
