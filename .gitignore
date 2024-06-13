@@ -52,4 +52,5 @@ composer.phar
 composer.lock
 vendor
 
+webdir.db.conf.ini.dist
 

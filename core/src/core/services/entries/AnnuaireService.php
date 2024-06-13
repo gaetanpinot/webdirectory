@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use web\api\core\domain\entities\Fonction;
 use web\api\core\domain\entities\Personne;
 use web\api\core\domain\entities\Service;
+use web\api\core\domain\entities\Telephone;
 
 class AnnuaireService implements AnnuaireServiceInterface
 {
@@ -28,11 +29,11 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $fonction = Fonction::find($id);
+            $personne = Personne::find($id);
 
-            if (!$fonction) throw new ModelNotFoundException();
+            if (!$personne) throw new ModelNotFoundException();
 
-            return $fonction;
+            return $personne;
 
         } catch (ModelNotFoundException $e) {
 //            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
@@ -44,11 +45,12 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $fonction = Fonction::find($id);
+            $service = Service::find($id);
 
-            if (!$fonction) throw new ModelNotFoundException();
+            if (!$service) throw new ModelNotFoundException();
 
-            return $fonction;
+//            var_dump($service);
+            return $service;
 
         } catch (ModelNotFoundException $e) {
 //            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
@@ -60,11 +62,11 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $fonction = Fonction::find($id);
+            $telephones = Personne::find($idPers)->telephone;
 
-            if (!$fonction) throw new ModelNotFoundException();
+            if (!$telephones) throw new ModelNotFoundException();
 
-            return $fonction;
+            return $telephones->toArray();
 
         } catch (ModelNotFoundException $e) {
 //            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
