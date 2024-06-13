@@ -6,6 +6,7 @@ services:
     image: canals/php:latest
     volumes:
       - ./core/public/:/var/www/html
+      - ./web:/var/www/web
       # - ./core/public:/var/www/html
       - ./core/src:/var/www/src
     working_dir: /var/www/src
