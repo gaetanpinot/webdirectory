@@ -1,7 +1,9 @@
 <?php
 
 namespace web\api\core\domain\entities;
-class Personne extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class Personne extends Model
 {
 //personne(pk int id, varchar nom, varchar prenom, varchar num_bureau, varchar mail, varchar url_img)
 

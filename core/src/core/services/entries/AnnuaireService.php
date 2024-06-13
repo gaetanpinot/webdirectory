@@ -1,8 +1,9 @@
 <?php
 
+namespace web\api\core\services\entries;
+
 class AnnuaireService implements AnnuaireServiceInterface
 {
-
     public function getFonctionById(): Fonction
     {
         // TODO: Implement getFonctionById() method.
@@ -16,5 +17,10 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getServiceById(): Service
     {
         // TODO: Implement getServiceById() method.
+    }
+
+    public function getTelephoneByPersonne(): array
+    {
+        // TODO: Implement getTelephoneByPersonne() method.
     }
 }

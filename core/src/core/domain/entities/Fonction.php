@@ -1,6 +1,8 @@
 <?php
 namespace web\api\core\domain\entities ;
-class Fonction extends \Illuminate\Database\Eloquent\Model
+
+use Illuminate\Database\Eloquent\Model;
+class Fonction extends Model
 {
     protected $table = 'fonction';
     protected $primaryKey = 'id';

@@ -4,7 +4,8 @@ namespace web\api\app\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-class GetPersonne extends AbstractAction
+
+class GetTelephoneByPersonne extends AbstractAction
 {
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface

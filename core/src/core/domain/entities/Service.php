@@ -1,6 +1,9 @@
 <?php
 namespace web\api\core\domain\entities ;
-class Service extends \Illuminate\Database\Eloquent\Model
+
+use Illuminate\Database\Eloquent\Model;
+
+class Service extends Model
 {
 //fonction(pk int id,varchar libelle)
     protected $table = 'service';
