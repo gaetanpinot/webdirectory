@@ -112,9 +112,10 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getPersonnesByServices(mixed $id)
     {
         try{
-            $personnes=Personne::whereHas('services',function($query) use($id){
-                $query->where('id','=',$id);
-            });
+//            $personnes=Personne::whereHas('service',function($query) use($id){
+//                $query->where('id','=',$id);
+//            })->get();
+            $personnes=Service::where('id','=',$id)->with('personnes')->get();
             return $personnes->toArray();
         }catch (QueryException $e){
 
