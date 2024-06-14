@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block titre%}{%endblock%} - Webdir Admin</title>
+    <meta charset="UTF-8"/>
+</head>
+
+<body>
+{% use 'navbar.twig' with navbar as NAVBAR %}
+{% block navbar %}
+    {{ block('NAVBAR') }}
+{% endblock %}
+<main>
+    {% block main %}
+    {% endblock %}
+</main>
+
+<footer>
+
+</footer>
+</body>
+
+</html>
