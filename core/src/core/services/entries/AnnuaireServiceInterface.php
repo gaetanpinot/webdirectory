@@ -7,7 +7,7 @@ use web\api\core\domain\entities\Service;
 interface AnnuaireServiceInterface
 {
     public function getFonctionById(int $id): Fonction;
-    public function getPersonneById(int $id): Personne;
+    public function getPersonneById(int $id): array;
     public function getServiceById(int $id): Service;
     public function getTelephoneByPersonne(int $idPers): array;
 

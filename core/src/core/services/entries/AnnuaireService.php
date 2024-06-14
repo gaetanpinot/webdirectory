@@ -26,15 +26,15 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonneById(int $id): Personne
+    public function getPersonneById(int $id): array
     {
         try {
 
-            $personne = Personne::find($id);
+            $personne = Personne::where('id','=',$id)->with('service')->get();
 
             if (!$personne) throw new ModelNotFoundException();
 
-            return $personne;
+            return $personne->toArray();
 
         } catch (ModelNotFoundException $e) {
 //            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);

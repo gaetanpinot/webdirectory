@@ -28,6 +28,6 @@ class Personne extends Model
     //personne_service(pk fk int id_personne, pk fk int id_service)
 
     public function service(){
-        return $this->belongsToMany('web\api\core\domain\entities\Service','personne_service','id_personne','id_service');
+        return $this->belongsToMany(Service::class,'personne_service','id_personne','id_service');
     }
 }

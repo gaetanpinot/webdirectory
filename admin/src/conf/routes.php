@@ -12,6 +12,7 @@ use web\admin\app\actions\PostCreateAdmin;
 use web\admin\app\actions\PostPersonneCreate;
 use web\admin\app\actions\PostServiceCreate;
 use web\admin\app\actions\Racine;
+use web\admin\app\actions\GetAllPersonne;
 
 
 return function (App $app): App {
