@@ -27,7 +27,8 @@ class GetAllPersonne extends AbstractAction
                 foreach($e['service'] as $s){
                     $service[]=[
                         'id'=>$s['id'],
-                        'libelle'=>$s['libelle']
+                        'libelle'=>$s['libelle'],
+                        'links'=>['detail'=>"/api/services/{$s['id']}"]
                     ];
                 }
                 $dataAfterFiltering['personnes'][] = [

@@ -17,7 +17,7 @@ class PostServiceCreate extends AbstractAction
 
         $champsCreateService = [];
         $champsCreateService['libelle'] = filter_var($_POST['libelle'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $champsCreateService['description'] = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $champsCreateService['description'] = filter_var($_POST['description']);
         $champsCreateService['etage'] = filter_var($_POST['etage'], FILTER_SANITIZE_NUMBER_INT);
 
         $cle = array_keys($champsCreateService);
