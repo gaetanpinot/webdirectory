@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace web\api\conf;
 
 use Slim\App;
+use Slim\Exception\HttpNotFoundException;
 use web\api\app\actions\GetAllFonction;
 use web\api\app\actions\GetAllPersonne;
 use web\api\app\actions\GetAllService;
@@ -39,6 +40,10 @@ return function (App $app): App {
     $app->get('/api/personnes[/]', GetAllPersonne::class);
 
     $app->get('/api/personnes/{id}/telephones[/]', GetTelephonesByPersonne::class);
+
+    $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+        throw new HttpNotFoundException($request);
+    });
 
     return $app;
 };

@@ -113,10 +113,23 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonnesWithServices()
+    public function getPersonnesWithServices($sort = '')
     {
+
         try {
-            $personnes = Personne::with('service')->get();
+            $personnes = Personne::with('service');
+            switch ($sort) {
+                case 'nom-desc':
+                    $personnes->orderByDesc('nom');
+                    break;
+                case 'nom-asc':
+                    $personnes->orderBy('nom');
+                    break;
+                default:
+                    break;
+
+            }
+            $personnes=$personnes->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
 
@@ -172,14 +185,14 @@ class AnnuaireService implements AnnuaireServiceInterface
 
     public function createService(array $champsCreateService): int
     {
-        try{
-            $service=new Service();
-            $service->libelle=$champsCreateService['libelle'];
-            $service->description=$champsCreateService['description'];
-            $service->etage=$champsCreateService['etage'];
+        try {
+            $service = new Service();
+            $service->libelle = $champsCreateService['libelle'];
+            $service->description = $champsCreateService['description'];
+            $service->etage = $champsCreateService['etage'];
             $service->save();
             return $service->id;
-        }catch (QueryException $e){
+        } catch (QueryException $e) {
             throw new NotFoundAnnuaireException('Insertion error');
         }
     }

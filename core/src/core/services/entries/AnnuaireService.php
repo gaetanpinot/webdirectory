@@ -26,15 +26,15 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonneById(int $id): Personne
+    public function getPersonneById(int $id): array
     {
         try {
 
-            $personne = Personne::find($id);
+            $personne = Personne::where('id','=',$id)->with('service')->get();
 
             if (!$personne) throw new ModelNotFoundException();
 
-            return $personne;
+            return $personne->toArray();
 
         } catch (ModelNotFoundException $e) {
 //            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
@@ -99,9 +99,21 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonnesWithServices(){
+    public function getPersonnesWithServices($order=""){
         try{
-            $personnes=Personne::with('service')->get();
+            $personnes=Personne::with('service');
+            switch($order){
+                case 'nom-desc':
+                    $personnes->orderByDesc('nom');
+                    break;
+                case 'nom-asc':
+                    $personnes->orderBy('nom');
+                    break;
+                default:
+                    break;
+
+            }
+            $personnes=$personnes->get();
             return $personnes->toArray();
         }catch (QueryException $e){
 

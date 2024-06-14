@@ -13,6 +13,7 @@ services:
       - "44000:80"
     networks:
       - webdir.net
+    restart: unless-stopped
 
   admin:
     image: canals/php:latest
@@ -24,6 +25,7 @@ services:
       - "44003:80"
     networks:
       - webdir.net
+    restart: unless-stopped
 
   sql:
     image: mariadb:latest
@@ -38,6 +40,8 @@ services:
       webdir.net:
         aliases:
           - webdir.db
+    restart: unless-stopped
+
   adminer:
     image: adminer:latest
     command: php -S 0.0.0.0:8080 -t /var/www/html
@@ -45,4 +49,4 @@ services:
       - "44002:8080"
     networks:
       - webdir.net
-
+    restart: unless-stopped

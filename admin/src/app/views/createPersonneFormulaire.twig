@@ -1,3 +1,5 @@
+{% extends 'squelette.twig' %}
+{% block main %}
 <form class="formulaireCreatePersonne" method="post">
 
     <label for="nom">Nom</label>
@@ -31,5 +33,5 @@
 
     <input type="submit" value="Submit">
 
-{#    //personne(pk int id, varchar nom, varchar prenom, varchar num_bureau, varchar mail, varchar url_img)#}
 </form>
+{% endblock %}

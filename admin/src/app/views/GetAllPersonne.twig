@@ -1,0 +1,12 @@
+{% extends 'squelette.twig' %}
+{% block main %}
+    <table class="tablePersonne">
+        {% for p in personnes %}
+            <tr class="lignePersonne">
+                <td class="nomPersonne"> {{ p.nom }}</td>
+                <td class="prenomPersonne">{{ p.prenom }}</td>
+                <td class="servicePersonn">{{ p.service[0].libelle }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
