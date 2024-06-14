@@ -24,7 +24,7 @@ class GetPersonne extends AbstractAction
             $service = [];
             $s = $e['service'][0];
 
-            $service[] = [
+            $service = [
                 'id' => $s['id'],
                 'libelle' => $s['libelle'],
                 'links' => ['detail' => "/api/services/{$s['id']}"]
