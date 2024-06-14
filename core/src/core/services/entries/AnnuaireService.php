@@ -99,9 +99,21 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonnesWithServices(){
+    public function getPersonnesWithServices($order=""){
         try{
-            $personnes=Personne::with('service')->get();
+            $personnes=Personne::with('service');
+            switch($order){
+                case 'nom-desc':
+                    $personnes->orderByDesc('nom');
+                    break;
+                case 'nom-asc':
+                    $personnes->orderBy('nom');
+                    break;
+                default:
+                    break;
+
+            }
+            $personnes=$personnes->get();
             return $personnes->toArray();
         }catch (QueryException $e){
 

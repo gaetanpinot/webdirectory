@@ -14,8 +14,12 @@ class GetAllPersonne extends AbstractAction
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $annuaireService = new AnnuaireService();
+        $sort='';
+        if(isset($_GET['sort'])){
+            $sort=$_GET['sort'];
+        }
         try {
-            $personnes = $annuaireService->getPersonnesWithServices();
+            $personnes = $annuaireService->getPersonnesWithServices($sort);
             $data = compact('personnes');
             $dataAfterFiltering = ['personnes'=>[]];
             foreach ($data['personnes'] as $e) {
