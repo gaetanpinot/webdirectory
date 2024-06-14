@@ -19,7 +19,6 @@ use web\api\app\actions\RacineHtml;
 
 return function (App $app): App {
 
-    $app->get('[/]', RacineHtml::class);
 
     $app->get('/api[/]', Racine::class);
 
