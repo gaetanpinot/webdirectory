@@ -12,9 +12,12 @@ RewriteEngine On
 # réécriture pour slim
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule ^ index.php [QSA,L]
-#RewriteRule ^api/?$ /index.php #[QSA,L]
-RewriteRule ^api(/.*)?$ index.php [L] #[QSA,L]
 
+# Redirige les requetes vers localhost:44000/api vers index.php
+RewriteRule ^api(/.*)?$ index.php [L]
+
+# Redirige les requetes vers la localhost:44000/ vers web/index.html
 RewriteRule ^$ web/index.html [L]
+
+# Redirige les requetes vers index.js vers web
 RewriteRule ^(index.js|index.css)$ web/$1 [L]
