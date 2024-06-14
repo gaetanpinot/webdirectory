@@ -4,6 +4,7 @@ namespace web\admin\core\services\entries;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use web\admin\core\domain\entities\Admin;
 use web\admin\core\domain\entities\Fonction;
 use web\admin\core\domain\entities\Personne;
 use web\admin\core\domain\entities\Service;
@@ -11,6 +12,18 @@ use web\admin\core\services\NotFoundAnnuaireException;
 
 class AnnuaireService implements AnnuaireServiceInterface
 {
+    public function adminLogin(string $name, string $password): bool
+    {
+        $admin = Admin::where('username', '=', $name)->first();
+        if ($admin && password_verify($password, $admin->password)) {
+            $_SESSION['user'] = [
+                'username' => $admin->username,
+                'is_super_admin' => $admin->is_super_admin,
+            ];
+            return true;
+        }
+        return false;
+    }
     public function getFonctionById(int $id): Fonction
     {
         try {
@@ -100,10 +113,23 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonnesWithServices()
+    public function getPersonnesWithServices($sort = '')
     {
+
         try {
-            $personnes = Personne::with('service')->get();
+            $personnes = Personne::with('service');
+            switch ($sort) {
+                case 'nom-desc':
+                    $personnes->orderByDesc('nom');
+                    break;
+                case 'nom-asc':
+                    $personnes->orderBy('nom');
+                    break;
+                default:
+                    break;
+
+            }
+            $personnes=$personnes->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
 
@@ -155,20 +181,18 @@ class AnnuaireService implements AnnuaireServiceInterface
         } catch (ModelNotFoundException $e) {
             throw new NotFoundAnnuaireException('Service invalide');
         }
-
-
     }
 
-    public function createService(array $champsCreateService)
+    public function createService(array $champsCreateService): int
     {
-        try{
-            $service=new Service();
-            $service->libelle=$champsCreateService['libelle'];
-            $service->description=$champsCreateService['description'];
-            $service->etage=$champsCreateService['etage'];
+        try {
+            $service = new Service();
+            $service->libelle = $champsCreateService['libelle'];
+            $service->description = $champsCreateService['description'];
+            $service->etage = $champsCreateService['etage'];
             $service->save();
             return $service->id;
-        }catch (QueryException $e){
+        } catch (QueryException $e) {
             throw new NotFoundAnnuaireException('Insertion error');
         }
     }

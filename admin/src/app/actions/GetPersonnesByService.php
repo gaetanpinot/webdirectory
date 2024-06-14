@@ -8,7 +8,7 @@ use Slim\Exception\HttpInternalServerErrorException;
 use web\admin\core\services\entries\AnnuaireService;
 use web\admin\core\services\NotFoundAnnuaireException;
 
-class GetPersonneByService extends AbstractAction
+class GetPersonnesByService extends AbstractAction
 {
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface

@@ -14,17 +14,44 @@ class GetPersonne extends AbstractAction
 
         try {
             $personne = $annuaireServ->getPersonneById($args['id']);
+            $personne = $personne[0];
 
             $data = compact('personne');
-            $jsonData = json_encode(['type' => 'resource', 'data' => $data]);
+//            var_dump($data);
+
+            $dataAfterFiltering = ['personne' => []];
+            $e = $data['personne'];
+            $service = [];
+            $s = $e['service'][0];
+
+            $service = [
+                'id' => $s['id'],
+                'libelle' => $s['libelle'],
+                'links' => ['detail' => "/api/services/{$s['id']}"]
+            ];
+
+            $dataAfterFiltering['personne'] = [
+                'id' => $e['id'],
+                'nom' => $e['nom'],
+                'prenom' => $e['prenom'],
+                'mail'=>$e['mail'],
+                'num_bureau'=>$e['num_bureau'],
+                'url_img'=>$e['url_img'],
+                'service' => $service,
+
+            ];
+
+
+            $jsonData = json_encode(['type' => 'resource', 'data' => $dataAfterFiltering]);
             $response->getBody()->write($jsonData);
             return $response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
 
-        }catch (\Exception $e){
-            return $response->withStatus(500);
-            //TODO EXCEPTION
-        }
-    }
+        }catch (\Exception $e)
+{
+return $response->withStatus(500);
+    //TODO EXCEPTION
+}
+}
 }

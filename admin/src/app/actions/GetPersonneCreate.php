@@ -15,6 +15,6 @@ class GetPersonneCreate extends AbstractAction
         $annuaire=new AnnuaireService();
         $services=$annuaire->getServices();
         $view=Twig::fromRequest($request);
-        return $view->render($response,'createPersonneFormulaire.twig',['services'=>$services]);
+        return $view->render($response,'createPersonneFormulaire.twig', compact('services'));
     }
 }

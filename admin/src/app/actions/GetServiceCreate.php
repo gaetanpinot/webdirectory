@@ -11,7 +11,7 @@ class GetServiceCreate extends AbstractAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $view=Twig::fromRequest($request);
-        return $view->render($response,'GetCreerService.twig');
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'service_create.twig');
     }
 }
