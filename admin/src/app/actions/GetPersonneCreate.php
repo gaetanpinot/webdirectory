@@ -5,12 +5,16 @@ namespace web\admin\app\actions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\Twig;
+use web\admin\core\services\entries\AnnuaireService;
 
-class Racine extends AbstractAction
+class GetPersonneCreate extends AbstractAction
 {
+
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+        $annuaire=new AnnuaireService();
+        $services=$annuaire->getServices();
         $view=Twig::fromRequest($request);
-        return $view->render( $response,'racine.twig', [ 'authOk' => isset($_SESSION['user']) ] );
+        return $view->render($response,'createPersonneFormulaire.twig', compact('services'));
     }
 }

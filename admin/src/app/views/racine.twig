@@ -1,1 +1,9 @@
 <h1>Racine Webdir.admin</h1>
+{% if authOk %}
+        <a href="/logout">Logout</a>
+{% else %}
+        <a href="/login">Login</a>
+{% endif %}
+
+<a href="/service/create">Create Service</a>
+<a href="/personne/create">Create Personne</a>

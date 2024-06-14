@@ -2,21 +2,21 @@
 
 namespace web\admin\core\services\auth;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Psr\Http\Message\ResponseInterface ;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Psr7\Response;
 use Slim\Routing\RouteContext;
+use Slim\Views\Twig;
 
 class Auth implements AuthInterface
 {
-    public function __invoke(Request $request, RequestHandler $handler): Response {
-        $session = $request->getAttribute('session');
+    public function __invoke(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
 
-        if (!isset($session['user'])) {
-            $routeParser = RouteContext::fromRequest($request)->getRouteParser();
-            $response = new \Slim\Psr7\Response();
-            return $response->withHeader('Location', $routeParser->urlFor('login'))
-                ->withStatus(302);
+        if (!isset($_SESSION['user'])) {
+            $twig = Twig::fromRequest($request);
+
+            return $twig->render(new Response(), "LogInNeeded.twig");
         }
 
         return $handler->handle($request);

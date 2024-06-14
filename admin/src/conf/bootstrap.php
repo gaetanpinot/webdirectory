@@ -6,6 +6,9 @@ use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use web\admin\infrastructure\Eloquent;
 use Slim\Views\TwigMiddleware;
+
+session_start();
+
 Eloquent::init(__DIR__ . '/../conf/webdir.db.conf.ini.dist');
 
 $app = AppFactory::create();
