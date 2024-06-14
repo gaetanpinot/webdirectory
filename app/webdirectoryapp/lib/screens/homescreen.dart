@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import '../api/api_service.dart';
+import '../models/personne.dart';
 import '../screens/detail_screen.dart';
 import '../widgets/user_list.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/sort_button.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -14,8 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _filter = TextEditingController();
   final ApiService _apiService = ApiService();
   String _searchText = "";
-  List<Map<String, dynamic>> names = [];
-  List<Map<String, dynamic>> filteredNames = [];
+  List<Personne> names = [];
+  List<Personne> filteredNames = [];
   Icon _searchIcon = const Icon(Icons.search);
   Widget _appBarTitle = const Text('WebDirectory');
   bool _isAscending = true;
@@ -48,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         names = fetchedNames;
         filteredNames = names;
-        _sortNames();
       });
     } catch (e) {
       debugPrint("Erreur lors de la récupération des noms : $e");
@@ -59,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_searchText.isNotEmpty) {
       setState(() {
         filteredNames = names.where((name) {
-          return name['nom'].toLowerCase().contains(_searchText.toLowerCase());
+          return name
+              .getNom()
+              .toLowerCase()
+              .contains(_searchText.toLowerCase());
         }).toList();
         _sortNames();
       });
@@ -69,9 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _sortNames() {
     setState(() {
       if (_isAscending) {
-        filteredNames.sort((a, b) => a['nom'].compareTo(b['nom']));
+        filteredNames.sort((a, b) => a.getNom().compareTo(b.getNom()));
       } else {
-        filteredNames.sort((a, b) => b['nom'].compareTo(a['nom']));
+        filteredNames.sort((a, b) => b.getNom().compareTo(a.getNom()));
       }
     });
   }
@@ -91,10 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => DetailScreen(
-              name: filteredNames[index]['nom'],
-              prenom: filteredNames[index]['prenom'],
-              serviceLibelle: filteredNames[index][
-                  'serviceLibelle'], 
+              name: filteredNames[index].getNom(),
+              prenom: filteredNames[index].getPrenom(),
+              serviceLibelle: filteredNames[index]
+                  .getServiceLibelle(), // Assurez-vous de récupérer correctement le libellé du service
             ),
           ),
         );
@@ -108,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _searchIcon = const Icon(Icons.close);
         _appBarTitle = CustomSearchBar(
           controller: _filter,
-          hintText: 'Rechercher...',
+          hintText: 'Search...',
         );
       } else {
         _searchIcon = const Icon(Icons.search);

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-class UserList extends StatelessWidget {
-  final List<Map<String, dynamic>> filteredNames;
-  final void Function(int index) onTap;
+import '../models/personne.dart';
 
-  UserList({required this.filteredNames, required this.onTap});
+class UserList extends StatelessWidget {
+  final List<Personne> filteredNames;
+  final void Function(int index) onTap;
+  final String startUrl = 'https://localhost:44000';
+
+  const UserList({super.key, required this.filteredNames, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +15,14 @@ class UserList extends StatelessWidget {
       itemCount: filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          leading: filteredNames[index]['imageUrl'] != null
+          leading: filteredNames[index].getUrl() != null
               ? CircleAvatar(
                   backgroundImage:
-                      NetworkImage(filteredNames[index]['imageUrl']),
+                      NetworkImage(startUrl + filteredNames[index].getUrl()),
                 )
-              : CircleAvatar(), 
-          title: Text(filteredNames[index]['nom']),
-          subtitle: Text(filteredNames[index]['prenom']),
+              : const CircleAvatar(),
+          title: Text(filteredNames[index].getNom()),
+          subtitle: Text(filteredNames[index].getPrenom()),
           onTap: () => onTap(index),
         );
       },
