@@ -1,0 +1,7 @@
+driver=mysql
+username=root
+password=toto
+host=webdir.db
+database=webdir
+charset=utf8
+collation=utf8_unicode_ci

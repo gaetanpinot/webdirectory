@@ -1,12 +1,12 @@
 <?php
 
-namespace web\api\app\actions;
+namespace web\admin\app\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;
-use web\api\core\services\entries\AnnuaireService;
-use web\api\core\services\NotFoundAnnuaireException;
+use web\admin\core\services\entries\AnnuaireService;
+use web\admin\core\services\NotFoundAnnuaireException;
 
 class GetPersonneByName extends AbstractAction
 {

@@ -7,7 +7,6 @@ services:
     volumes:
       - ./core/public/:/var/www/html
       - ./web:/var/www/web
-      # - ./core/public:/var/www/html
       - ./core/src:/var/www/src
     working_dir: /var/www/src
     ports:
@@ -19,7 +18,7 @@ services:
     image: canals/php:latest
     volumes:
       - ./admin/public:/var/www/html
-      - ./core/src:/var/www/src
+      - ./admin/src:/var/www/src
     working_dir: /var/www/src
     ports:
       - "44003:80"
