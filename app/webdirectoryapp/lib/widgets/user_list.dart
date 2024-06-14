@@ -7,7 +7,7 @@ class UserList extends StatelessWidget {
   final void Function(int index) onTap;
   final String startUrl = 'https://localhost:44000';
 
-  UserList({required this.filteredNames, required this.onTap});
+  const UserList({super.key, required this.filteredNames, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

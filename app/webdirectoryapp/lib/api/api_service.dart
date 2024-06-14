@@ -32,7 +32,6 @@ class ApiService {
           );
           personnesList.add(personneMap);
         }
-        print(personnesList);
         return personnesList;
       } else {
         throw Exception('Failed to load names: ${response.statusCode}');

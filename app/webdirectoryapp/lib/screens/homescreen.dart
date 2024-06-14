@@ -7,6 +7,8 @@ import '../widgets/custom_search_bar.dart';
 import '../widgets/sort_button.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
