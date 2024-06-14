@@ -9,6 +9,20 @@ use web\admin\core\domain\entities\Service;
 
 class AnnuaireService implements AnnuaireServiceInterface
 {
+    public function createService(array $data): void {
+        try {
+            $service = new Service();
+            $service->libelle = $data['libelle'];
+            $service->etage = $data['etage'] ?? null;
+            $service->description = $data['description'] ?? '';
+            $service->save();
+        } catch (QueryException $e) {
+            //TODO Exception
+            throw new \Exception("Error creating service", 500, $e);
+        }
+    }
+
+
     public function getFonctionById(int $id): Fonction
     {
         try {

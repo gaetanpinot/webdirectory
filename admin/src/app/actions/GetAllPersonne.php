@@ -1,6 +1,6 @@
 <?php
 
-namespace web\api\app\actions;
+namespace web\admin\app\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
