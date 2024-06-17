@@ -6,6 +6,7 @@ class Detail {
   final String prenom;
   final Service service;
   late String personneUrl;
+  final String imgUrl;
 
   Detail({
     required this.id,
@@ -13,6 +14,7 @@ class Detail {
     required this.prenom,
     required this.service,
     String? personneUrl,
+    required this.imgUrl,
   }) {
     this.personneUrl = personneUrl ?? '';
   }
@@ -22,6 +24,7 @@ class Detail {
         id: json['id'],
         nom: json['nom'],
         prenom: json['prenom'],
+        imgUrl: json['url_img'],
         service: Service.fromJson(json['service']),
         personneUrl: json['links']['detail']);
   }

@@ -14,10 +14,9 @@ class UserList extends StatelessWidget {
       itemCount: filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          leading: filteredNames[index].getPersonneUrl() != null
+          leading: filteredNames[index].imgUrl.isNotEmpty
               ? CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      startUrl + filteredNames[index].getPersonneUrl()),
+                  backgroundImage: NetworkImage(filteredNames[index].imgUrl),
                 )
               : const CircleAvatar(),
           title: Text(

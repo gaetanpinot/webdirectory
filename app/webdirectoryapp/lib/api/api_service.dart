@@ -57,6 +57,7 @@ class ApiService {
             id: personne['id'],
             nom: personne['nom'],
             prenom: personne['prenom'],
+            imgUrl: personne['url_img'] ?? "",
             service: Service(
                 libelle: service['libelle'],
                 id: service['id'],
