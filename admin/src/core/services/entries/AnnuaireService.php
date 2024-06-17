@@ -29,15 +29,14 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $fonction = Fonction::find($id);
+            $fonction = Fonction::findOrFail($id);
 
             if (!$fonction) throw new ModelNotFoundException();
 
             return $fonction;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Fonction introuvable');
         }
     }
 
@@ -45,15 +44,14 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $personne = Personne::find($id);
+            $personne = Personne::findOrFail($id);
 
             if (!$personne) throw new ModelNotFoundException();
 
             return $personne;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -61,7 +59,7 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $service = Service::find($id);
+            $service = Service::findOrFail($id);
 
             if (!$service) throw new ModelNotFoundException();
 
@@ -69,8 +67,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $service;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Service introuvable');
         }
     }
 
@@ -78,15 +75,14 @@ class AnnuaireService implements AnnuaireServiceInterface
     {
         try {
 
-            $telephones = Personne::find($idPers)->telephone;
+            $telephones = Personne::findOrFail($idPers)->telephone;
 
             if (!$telephones) throw new ModelNotFoundException();
 
             return $telephones->toArray();
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -98,8 +94,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return ($services->toArray());
 
         } catch (QueryException $e) {
-
-
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
         }
     }
 
@@ -110,7 +105,7 @@ class AnnuaireService implements AnnuaireServiceInterface
 
             return $fonction->toArray();
         } catch (QueryException $e) {
-
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
         }
     }
 
@@ -140,7 +135,9 @@ class AnnuaireService implements AnnuaireServiceInterface
             $personnes = $personnes->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
-
+            throw new NotFoundAnnuaireException('Erreur de base donnée');
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundAnnuaireException("Personne non trouvé");
         }
     }
 
@@ -148,15 +145,12 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getPersonnesByServices(mixed $id)
     {
         try {
-//            $personnes=Personne::whereHas('service',function($query) use($id){
-//                $query->where('id','=',$id);
-//            })->get();
             $personnes = Service::where('id', '=', $id)->with('personnes')->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
-
+            throw new NotFoundAnnuaireException('Erreur de base donnée');
         } catch (ModelNotFoundException $e) {
-
+            throw new NotFoundAnnuaireException("Service not found");
         }
     }
 
@@ -166,9 +160,9 @@ class AnnuaireService implements AnnuaireServiceInterface
             $personnes = Personne::where('nom', 'like', '%' . $name . '%')->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
-
+            throw new NotFoundAnnuaireException('Erreur de base donnée');
         } catch (ModelNotFoundException $e) {
-
+            throw new NotFoundAnnuaireException("Personne not found");
         }
     }
 
@@ -181,6 +175,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             $perso->mail = $p['mail'];
             $perso->num_bureau = $p['num_bureau'];
             $perso->url_img = $p['url_img'];
+            $perso->publie = true;
             $service = Service::find($p['id_service']);
             $service->personnes()->save($perso);
             return $perso->id;
