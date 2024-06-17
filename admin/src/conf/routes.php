@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace web\admin\conf;
 
 use Slim\App;
+use web\admin\app\actions\GetAllPersonne;
 use web\admin\app\actions\GetCreateAdmin;
 use web\admin\app\actions\GetLoginForm;
 use web\admin\app\actions\GetLogout;
@@ -19,13 +20,14 @@ use web\admin\core\services\auth\Auth;
 
 return function (App $app): App {
 
+    $app->get('/personne[/]',GetAllPersonne::class)->setName('allPersonnes');
     $app->get('[/]', Racine::class)->setName('racine');
 
     $app->get('/personne/create[/]', GetPersonneCreate::class)->setName('createPersonne')->add(Auth::class);
     $app->post('/personne/create[/]', PostPersonneCreate::class)->add(Auth::class);
 
-    $app->get('/admin/create[/]',GetCreateAdmin::class)->setName('createAdmin')->add(Auth::class);
-    $app->post('/admin/create[/]',PostCreateAdmin::class)->add(Auth::class);
+    $app->get('/admin/create[/]', GetCreateAdmin::class)->setName('createAdmin')->add(Auth::class);
+    $app->post('/admin/create[/]', PostCreateAdmin::class)->add(Auth::class);
 
     $app->get('/service/create[/]', GetServiceCreate::class)->setName('createService')->add(Auth::class);
     $app->post('/service/create[/]', PostServiceCreate::class)->add(Auth::class);

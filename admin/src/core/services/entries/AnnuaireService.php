@@ -24,6 +24,7 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
         return false;
     }
+
     public function getFonctionById(int $id): Fonction
     {
         try {
@@ -113,11 +114,18 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonnesWithServices($sort = '')
+    public function getPersonnesWithServices($sort = '', $filterLibelleService = "")
     {
 
         try {
-            $personnes = Personne::with('service');
+            if ($filterLibelleService != '') {
+                $personnes = Personne::whereHas('service',function($query)use($filterLibelleService){
+                    $query->where('id','=',$filterLibelleService);
+                })->with('service');
+            }else {
+                $personnes = Personne::with('service');
+            }
+
             switch ($sort) {
                 case 'nom-desc':
                     $personnes->orderByDesc('nom');
@@ -129,7 +137,7 @@ class AnnuaireService implements AnnuaireServiceInterface
                     break;
 
             }
-            $personnes=$personnes->get();
+            $personnes = $personnes->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
 

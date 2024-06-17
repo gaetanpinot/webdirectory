@@ -1,5 +1,25 @@
 {% extends 'squelette.twig' %}
 {% block main %}
+    <div id="filtre">
+        <p id="filtreActuelle">
+
+            {% if filtre!='' %}
+                Filtré par {{ filtre.libelle }}
+            {% else %}
+                Pas de filtre
+            {% endif %}
+        </p>
+
+        <form id="formFiltre" method="get" action="">
+
+            <select name="filter" id="filtre" >
+                {% for s in services %}
+                    <option value="{{ s.id }}">{{ s.libelle }}</option>
+                {% endfor %}
+                <input type="submit" value="Filtrer">
+            </select>
+        </form>
+    </div>
     <table class="tablePersonne">
         {% for p in personnes %}
             <tr class="lignePersonne">
@@ -8,5 +28,5 @@
                 <td class="servicePersonn">{{ p.service[0].libelle }}</td>
             </tr>
         {% endfor %}
-   </table>
+    </table>
 {% endblock %}

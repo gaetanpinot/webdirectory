@@ -18,7 +18,8 @@ CREATE TABLE `personne`(
 	`prenom` varchar(128) NOT NULL,
 	`num_bureau` varchar(10),
 	`mail` varchar(128),
-	`url_img` varchar(1024)
+	`url_img` varchar(1024),
+	`publie` boolean
 );
 
 CREATE TABLE `fonction`(

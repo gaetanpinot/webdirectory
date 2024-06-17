@@ -7,6 +7,7 @@
         <a href="/login">Login</a>
     {% endif %}
     <a href="{{url_for('racine')}}">Accueil</a>
+    <a href="{{url_for('allPersonnes')}}">Toute les personnes</a>
     <a href="{{url_for('createPersonne')}}">Créer personne</a>
     <a href="{{ url_for('createService') }}">Créer service</a>
     {% if isSuperAdmin==true %}
