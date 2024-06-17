@@ -5,7 +5,6 @@ namespace web\admin\app\actions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\Twig;
-use Slim\Routing\RouteContext;
 use web\admin\core\services\entries\AnnuaireService;
 
 class PostLogin extends AbstractAction

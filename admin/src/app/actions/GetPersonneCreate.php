@@ -12,9 +12,9 @@ class GetPersonneCreate extends AbstractAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $annuaire=new AnnuaireService();
-        $services=$annuaire->getServices();
-        $view=Twig::fromRequest($request);
-        return $view->render($response,'createPersonneFormulaire.twig', compact('services'));
+        $annuaire = new AnnuaireService();
+        $services = $annuaire->getServices();
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'createPersonneFormulaire.twig', compact('services'));
     }
 }

@@ -4,7 +4,6 @@ namespace web\admin\app\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
 class GetLogout extends AbstractAction

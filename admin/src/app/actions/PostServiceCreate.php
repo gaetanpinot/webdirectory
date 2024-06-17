@@ -35,11 +35,11 @@ class PostServiceCreate extends AbstractAction
 
         try {
             $service = $annuaire->createService($champsCreateService);
-        }catch (NotFoundAnnuaireException $exception){
-            throw new HttpNotFoundException($request,$exception->getMessage());
+        } catch (NotFoundAnnuaireException $exception) {
+            throw new HttpNotFoundException($request, $exception->getMessage());
         }
 
-        $view=Twig::fromRequest($request);
-        return $view->render($response,'PostCreerService.twig',['id'=>$service]);
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'PostCreerService.twig', ['id' => $service]);
     }
 }
