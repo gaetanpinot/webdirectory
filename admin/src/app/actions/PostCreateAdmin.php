@@ -7,6 +7,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use web\admin\core\services\entries\AnnuaireService;
 use web\admin\core\services\NotFoundAnnuaireException;
+use web\admin\utils\CsrfException;
+use web\admin\utils\CsrfToken;
 
 class PostCreateAdmin extends AbstractAction
 {
@@ -14,6 +16,12 @@ class PostCreateAdmin extends AbstractAction
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
+
+        try {
+            CsrfToken::check($_POST['token']);
+        } catch (CsrfException $e) {
+            throw new HttpNotFoundException($request, "Questionnaire invalide");
+        }
         if (!$_SESSION['user']['is_super_admin']) {
             throw new HttpNotFoundException($request, 'Vous devez être superAdmin pour créer un admin');
         }

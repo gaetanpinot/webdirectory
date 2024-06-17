@@ -8,12 +8,14 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 use web\admin\core\services\entries\AnnuaireService;
 use web\admin\core\services\NotFoundAnnuaireException;
+use web\admin\utils\CsrfToken;
 
 class GetPersonneCreate extends AbstractAction
 {
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+        $token = CsrfToken::generate();
         $annuaire = new AnnuaireService();
         try {
             $services = $annuaire->getServices();
@@ -21,6 +23,6 @@ class GetPersonneCreate extends AbstractAction
             throw new HttpNotFoundException($request, $e->getMessage());
         }
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'createPersonneFormulaire.twig', compact('services'));
+        return $view->render($response, 'createPersonneFormulaire.twig', ['services' => $services, 'token' => $token]);
     }
 }

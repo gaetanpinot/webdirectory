@@ -1,4 +1,5 @@
 {% extends 'squelette.twig' %}
+    {% block titre %}Création service{% endblock %}
 {% block main %}
     <form class="formulaireCreateService" method="post">
 
@@ -14,6 +15,7 @@
         <input type="text" id="champDescription"
                name="description" required>
 
+        <input type="hidden" name="token" value="{{ token }}">
         <input type="submit" value="Submit">
 
         {#    //personne(pk int id, varchar nom, varchar prenom, varchar num_bureau, varchar mail, varchar url_img) #}
