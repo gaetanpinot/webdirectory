@@ -10,7 +10,7 @@ class Racine extends AbstractAction
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $view=Twig::fromRequest($request);
-        return $view->render( $response,'racine.twig', [ 'authOk' => isset($_SESSION['user']) ] );
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'racine.twig', ['authOk' => isset($_SESSION['user'])]);
     }
 }

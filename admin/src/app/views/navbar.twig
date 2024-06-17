@@ -10,8 +10,6 @@
     <a href="{{url_for('allPersonnes')}}">Toute les personnes</a>
     <a href="{{url_for('createPersonne')}}">Créer personne</a>
     <a href="{{ url_for('createService') }}">Créer service</a>
-    {% if isSuperAdmin==true %}
     <a href="{{url_for('createAdmin')}}">Créer admin</a>
-    {% endif %}
 </div>
 {% endblock %}

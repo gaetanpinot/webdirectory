@@ -12,7 +12,7 @@
 
         <form id="formFiltre" method="get" action="">
 
-            <select name="filter" id="filtre" >
+            <select name="filter" id="filtre">
                 {% for s in services %}
                     <option value="{{ s.id }}">{{ s.libelle }}</option>
                 {% endfor %}
@@ -26,6 +26,16 @@
                 <td class="nomPersonne"> {{ p.nom }}</td>
                 <td class="prenomPersonne">{{ p.prenom }}</td>
                 <td class="servicePersonn">{{ p.service[0].libelle }}</td>
+                <td class="publierPersonne">
+                    <form action="{{ url_for('publierPersonne',{id:p.id}) }}" method="get">
+                        <input id="boutonPublier" type="submit" value="Publier personne">
+                    </form>
+                </td>
+                <td class="depublierPersonne">
+                    <form action="{{ url_for('depublierPersonne',{id:p.id}) }}" method="get">
+                        <input id="boutonDepublier" type="submit" value="Depublier personne">
+                    </form>
+                </td>
             </tr>
         {% endfor %}
     </table>

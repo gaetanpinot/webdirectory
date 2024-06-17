@@ -119,10 +119,10 @@ class AnnuaireService implements AnnuaireServiceInterface
 
         try {
             if ($filterLibelleService != '') {
-                $personnes = Personne::whereHas('service',function($query)use($filterLibelleService){
-                    $query->where('id','=',$filterLibelleService);
+                $personnes = Personne::whereHas('service', function ($query) use ($filterLibelleService) {
+                    $query->where('id', '=', $filterLibelleService);
                 })->with('service');
-            }else {
+            } else {
                 $personnes = Personne::with('service');
             }
 
@@ -202,6 +202,41 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $service->id;
         } catch (QueryException $e) {
             throw new NotFoundAnnuaireException('Insertion error');
+        }
+    }
+
+    public function publier($idPersonne)
+    {
+        try {
+            $personne = Personne::findOrFail($idPersonne);
+            $personne->publie = true;
+            $personne->save();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundAnnuaireException("Personne non trouvé");
+        }
+    }
+
+    public function depublier($idPersonne)
+    {
+        try {
+            $personne = Personne::findOrFail($idPersonne);
+            $personne->publie = false;
+            $personne->save();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundAnnuaireException("Personne non trouvé");
+        }
+    }
+
+    public function createAdmin(array $newAdminData)
+    {
+        try {
+            $newAdmin = new Admin();
+            $newAdmin->username = $newAdminData['username'];
+            $newAdmin->password = $newAdminData['password'];
+            $newAdmin->is_super_admin = 0;
+            $newAdmin->save();
+        } catch (QueryException $e) {
+            throw new NotFoundAnnuaireException("Erreur");
         }
     }
 }
