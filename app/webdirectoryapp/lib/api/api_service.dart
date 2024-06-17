@@ -74,4 +74,33 @@ class ApiService {
       throw Exception('Error fetching names: $e');
     }
   }
+
+  Future<List<Service>> getServices() async {
+    String url = 'http://localhost:44000/api/services';
+
+    try {
+      final response = await _dio.get(url);
+      if (response.statusCode == 200) {
+        List<Service> servicesList = [];
+        var aucunService = Service(libelle: "Aucun", id: 0, serviceUrl: "");
+        servicesList.add(aucunService);
+
+        var data = response.data['data']['services'];
+
+        for (var service in data) {
+          Service serviceMap = Service(
+            id: service['id'],
+            libelle: service['libelle'],
+            serviceUrl: service['links']['detail'],
+          );
+          servicesList.add(serviceMap);
+        }
+        return servicesList;
+      } else {
+        throw Exception('Failed to load services: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching services: $e');
+    }
+  }
 }

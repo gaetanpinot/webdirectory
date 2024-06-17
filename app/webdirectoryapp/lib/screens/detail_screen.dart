@@ -3,18 +3,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectoryapp/models/personne.dart';
 
 class DetailScreen extends StatelessWidget {
-  final String name; // Nom complet de l'utilisateur
-  final String prenom; // Prénom de l'utilisateur
-  final String serviceLibelle;
-  final String? imageUrl;
   final Personne? personne;
 
   const DetailScreen({
     super.key,
-    required this.name,
-    required this.prenom,
-    required this.serviceLibelle,
-    required this.imageUrl,
     this.personne,
   });
 
@@ -46,7 +38,7 @@ class DetailScreen extends StatelessWidget {
               'Service / département :',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text(serviceLibelle),
+            Text(personne!.service.libelle),
             const SizedBox(height: 16.0),
             const Text(
               'Email :',

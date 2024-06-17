@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectoryapp/models/detail.dart';
 import 'package:webdirectoryapp/models/personne.dart';
+import 'package:webdirectoryapp/models/service.dart';
 import '../api/api_service.dart';
 import '../screens/detail_screen.dart';
 import '../widgets/user_list.dart';
@@ -20,9 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String _searchText = "";
   List<Detail> names = [];
   List<Detail> filteredNames = [];
+  List<Service> services = [];
   Icon _searchIcon = const Icon(Icons.search);
   Widget _appBarTitle = const Text('WebDirectory');
   bool _isAscending = true;
+  String? _selectedService;
 
   _HomeScreenState() {
     _filter.addListener(() {
@@ -43,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _getNames();
+    _getServices();
     super.initState();
   }
 
@@ -58,6 +62,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void filterByService(String? selectedService) {
+    setState(() {
+      _selectedService = selectedService;
+    });
+    _updateFilter(); // Appliquer les filtres après la sélection d'un service
+  }
+
+  void _getServices() async {
+    try {
+      final fetchedServices = await _apiService.getServices();
+      setState(() {
+        services = fetchedServices;
+      });
+    } catch (e) {
+      debugPrint("Erreur lors de la récupération des services : $e");
+    }
+  }
+
   void _filterNames() {
     if (_searchText.isNotEmpty) {
       setState(() {
@@ -70,6 +92,52 @@ class _HomeScreenState extends State<HomeScreen> {
         _sortNames();
       });
     }
+  }
+
+  void _updateFilter() {
+    setState(() {
+      // Filtrer d'abord par service si un service est sélectionné
+      List<Detail> tempFilteredNames = _selectedService != null &&
+              _selectedService!.isNotEmpty &&
+              _selectedService != "Aucun"
+          ? names
+              .where(
+                  (Detail detail) => detail.service.libelle == _selectedService)
+              .toList()
+          : List.from(names);
+
+      // Ensuite, filtrer par texte de recherche si le texte n'est pas vide
+      if (_searchText.isNotEmpty) {
+        tempFilteredNames = tempFilteredNames.where((Detail detail) {
+          return detail
+              .getNom()
+              .toLowerCase()
+              .contains(_searchText.toLowerCase());
+        }).toList();
+      }
+
+      // Mettre à jour la liste filtrée
+      filteredNames = tempFilteredNames;
+    });
+  }
+
+  Widget buildServiceDropdown() {
+    return DropdownButton<String>(
+      value: _selectedService,
+      hint: const Text("Select Service"),
+      onChanged: (String? newValue) {
+        setState(() {
+          _selectedService = newValue;
+          filterByService(_selectedService);
+        });
+      },
+      items: services.map<DropdownMenuItem<String>>((Service service) {
+        return DropdownMenuItem<String>(
+          value: service.libelle,
+          child: Text(service.libelle),
+        );
+      }).toList(),
+    );
   }
 
   void _sortNames() {
@@ -102,26 +170,36 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => FutureBuilder<Personne>(
-              future: getPers(filteredNames[index].getPersonneUrl()),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return DetailScreen(
-                    name: filteredNames[index].getNom(),
-                    prenom: filteredNames[index].getPrenom(),
-                    serviceLibelle: filteredNames[index].getServiceLibelle(),
-                    imageUrl: filteredNames[index].getPersonneUrl(),
-                    personne: snapshot.data,
-                  );
-                }
-              },
-            ),
+            builder: (context) => _buildPersonneDetailPage(
+                filteredNames[index].getPersonneUrl(), index),
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildPersonneDetailPage(String url, int index) {
+    return FutureBuilder<Personne>(
+      future: getPers(url),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            appBar: AppBar(title: const Text("Error")),
+            body: Center(
+              child: Text('Error: ${snapshot.error.toString()}'),
+            ),
+          );
+        } else if (snapshot.hasData) {
+          return DetailScreen(personne: snapshot.data);
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: Text("No data available"),
+            ),
+          );
+        }
       },
     );
   }
@@ -133,6 +211,9 @@ class _HomeScreenState extends State<HomeScreen> {
         _appBarTitle = CustomSearchBar(
           controller: _filter,
           hintText: 'Search...',
+          onSearchChanged: (text) {
+            filterByService(_selectedService);
+          },
         );
       } else {
         _searchIcon = const Icon(Icons.search);
@@ -164,7 +245,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: _buildList(),
+      body: Column(
+        children: [
+          buildServiceDropdown(),
+          Expanded(
+            child: _buildList(),
+          ),
+        ],
+      ),
     );
   }
 }
