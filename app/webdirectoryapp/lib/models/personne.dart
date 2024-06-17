@@ -6,24 +6,29 @@ class Personne {
   final String prenom;
   final Service service;
   late String imageUrl;
+  final String numBur;
+  final String email;
 
   Personne({
     required this.id,
     required this.nom,
     required this.prenom,
     required this.service,
-    String? imageUrl,
-  }) {
-    this.imageUrl = imageUrl ?? '';
-  }
+    required this.imageUrl,
+    required this.numBur,
+    required this.email,
+  });
 
   factory Personne.fromJson(Map<String, dynamic> json) {
     return Personne(
-        id: json['id'],
-        nom: json['nom'],
-        prenom: json['prenom'],
-        service: Service.fromJson(json['service']),
-        imageUrl: json['links']['detail']);
+      id: json['id'],
+      nom: json['nom'],
+      prenom: json['prenom'],
+      service: Service.fromJson(json['service']),
+      imageUrl: json['links']['detail'],
+      numBur: json['numBur'],
+      email: json['email'],
+    );
   }
 
   String getNom() {
@@ -38,7 +43,7 @@ class Personne {
     return service.libelle;
   }
 
-  getUrl() {
-    return imageUrl;
+  getServiceUrl() {
+    return service.serviceUrl;
   }
 }

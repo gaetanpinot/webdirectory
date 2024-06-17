@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../models/personne.dart';
+import 'package:webdirectoryapp/models/detail.dart';
 
 class UserList extends StatelessWidget {
-  final List<Personne> filteredNames;
+  final List<Detail> filteredNames;
   final void Function(int index) onTap;
-  final String startUrl = 'https://localhost:44000';
+  final String startUrl = 'http://localhost:44000';
 
   const UserList({super.key, required this.filteredNames, required this.onTap});
 
@@ -15,14 +14,15 @@ class UserList extends StatelessWidget {
       itemCount: filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          leading: filteredNames[index].getUrl() != null
+          leading: filteredNames[index].getPersonneUrl() != null
               ? CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(startUrl + filteredNames[index].getUrl()),
+                  backgroundImage: NetworkImage(
+                      startUrl + filteredNames[index].getPersonneUrl()),
                 )
               : const CircleAvatar(),
-          title: Text(filteredNames[index].getNom()),
-          subtitle: Text(filteredNames[index].getPrenom()),
+          title: Text(
+              '${filteredNames[index].getNom()} ${filteredNames[index].getPrenom()}'),
+          subtitle: Text(filteredNames[index].getServiceLibelle()),
           onTap: () => onTap(index),
         );
       },

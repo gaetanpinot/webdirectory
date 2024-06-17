@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectoryapp/models/detail.dart';
+import 'package:webdirectoryapp/models/personne.dart';
 import '../api/api_service.dart';
-import '../models/personne.dart';
 import '../screens/detail_screen.dart';
 import '../widgets/user_list.dart';
 import '../widgets/custom_search_bar.dart';
@@ -17,8 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _filter = TextEditingController();
   final ApiService _apiService = ApiService();
   String _searchText = "";
-  List<Personne> names = [];
-  List<Personne> filteredNames = [];
+  List<Detail> names = [];
+  List<Detail> filteredNames = [];
   Icon _searchIcon = const Icon(Icons.search);
   Widget _appBarTitle = const Text('WebDirectory');
   bool _isAscending = true;
@@ -74,9 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _sortNames() {
     setState(() {
       if (_isAscending) {
-        filteredNames.sort((a, b) => a.getNom().compareTo(b.getNom()));
-      } else {
         filteredNames.sort((a, b) => b.getNom().compareTo(a.getNom()));
+      } else {
+        filteredNames.sort((a, b) => a.getNom().compareTo(b.getNom()));
       }
     });
   }
@@ -88,6 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<Personne> getPers(String url) async {
+    Personne personne;
+    personne = await _apiService.getDetailPersonne(url);
+    return personne;
+  }
+
   Widget _buildList() {
     return UserList(
       filteredNames: filteredNames,
@@ -95,11 +102,23 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailScreen(
-              name: filteredNames[index].getNom(),
-              prenom: filteredNames[index].getPrenom(),
-              serviceLibelle: filteredNames[index]
-                  .getServiceLibelle(), // Assurez-vous de récupérer correctement le libellé du service
+            builder: (context) => FutureBuilder<Personne>(
+              future: getPers(filteredNames[index].getPersonneUrl()),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return DetailScreen(
+                    name: filteredNames[index].getNom(),
+                    prenom: filteredNames[index].getPrenom(),
+                    serviceLibelle: filteredNames[index].getServiceLibelle(),
+                    imageUrl: filteredNames[index].getPersonneUrl(),
+                    personne: snapshot.data,
+                  );
+                }
+              },
             ),
           ),
         );
