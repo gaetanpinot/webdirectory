@@ -29,13 +29,12 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (imageUrl != null)
-              Center(
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(imageUrl!),
-                  radius: 50.0,
-                ),
+            Center(
+              child: CircleAvatar(
+                radius: 50.0,
+                backgroundImage: NetworkImage(personne!.imageUrl),
               ),
+            ),
             const SizedBox(height: 16.0),
             const Text(
               'Nom & prénom :',
