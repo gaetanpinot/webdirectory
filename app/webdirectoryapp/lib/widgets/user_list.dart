@@ -4,7 +4,6 @@ import 'package:webdirectoryapp/models/detail.dart';
 class UserList extends StatelessWidget {
   final List<Detail> filteredNames;
   final void Function(int index) onTap;
-  final String startUrl = 'http://localhost:44000';
 
   const UserList({super.key, required this.filteredNames, required this.onTap});
 
