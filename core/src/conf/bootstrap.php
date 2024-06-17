@@ -22,6 +22,6 @@ $app->add(function ($request, $handler) {
         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 });
-$app=(require_once __DIR__ . '/../conf/routes.php')($app);
+$app = (require_once __DIR__ . '/../conf/routes.php')($app);
 
-return($app);
+return ($app);

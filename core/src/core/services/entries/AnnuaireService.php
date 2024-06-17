@@ -4,11 +4,10 @@ namespace web\api\core\services\entries;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use web\api\core\services\NotFoundAnnuaireException;
 use web\api\core\domain\entities\Fonction;
 use web\api\core\domain\entities\Personne;
 use web\api\core\domain\entities\Service;
-use web\api\core\domain\entities\Telephone;
+use web\api\core\services\NotFoundAnnuaireException;
 
 class AnnuaireService implements AnnuaireServiceInterface
 {
@@ -23,8 +22,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $fonction;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Fonction introuvable');
         }
     }
 
@@ -43,8 +41,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $personne->toArray();
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -60,8 +57,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $service;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Service introuvable');
         }
     }
 
@@ -76,8 +72,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $telephones->toArray();
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -90,6 +85,7 @@ class AnnuaireService implements AnnuaireServiceInterface
 
         } catch (QueryException $e) {
 
+            throw new NotFoundAnnuaireException('Erreur de base donnée');
 
         }
     }
@@ -102,6 +98,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $fonction->toArray();
         } catch (QueryException $e) {
 
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
         }
     }
 
@@ -126,7 +123,9 @@ class AnnuaireService implements AnnuaireServiceInterface
             $personnes = $personnes->get();
             return $personnes->toArray();
         } catch (QueryException $e) {
-
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -145,9 +144,10 @@ class AnnuaireService implements AnnuaireServiceInterface
 
             return $personnes->toArray();
         } catch (QueryException $e) {
-
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
         } catch (ModelNotFoundException $e) {
 
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -161,8 +161,10 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $personnes->get()->toArray();
         } catch (QueryException $e) {
 
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
         } catch (ModelNotFoundException $e) {
 
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 }

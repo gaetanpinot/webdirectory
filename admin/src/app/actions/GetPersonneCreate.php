@@ -18,7 +18,7 @@ class GetPersonneCreate extends AbstractAction
         try {
             $services = $annuaire->getServices();
         } catch (NotFoundAnnuaireException $e) {
-            throw new HttpNotFoundException($request,$e->getMessage());
+            throw new HttpNotFoundException($request, $e->getMessage());
         }
         $view = Twig::fromRequest($request);
         return $view->render($response, 'createPersonneFormulaire.twig', compact('services'));

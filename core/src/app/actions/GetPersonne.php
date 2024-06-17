@@ -4,9 +4,8 @@ namespace web\api\app\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Exception\HttpNotFoundException;
-use web\admin\core\services\NotFoundAnnuaireException;
 use web\api\core\services\entries\AnnuaireService;
+use web\api\core\services\NotFoundAnnuaireException;
 
 class GetPersonne extends AbstractAction
 {
@@ -51,7 +50,7 @@ class GetPersonne extends AbstractAction
                 ->withStatus(200);
 
         } catch (NotFoundAnnuaireException $e) {
-            throw new HttpNotFoundException($request, $e->getMessage());
+            return $response->withStatus(500);
         }
     }
 }
