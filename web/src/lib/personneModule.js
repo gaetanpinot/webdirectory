@@ -1,10 +1,7 @@
 import Handlebars from 'handlebars';
-import { URL_API } from './config.js';
+import {URL_API} from './config.js';
+import {addEventListnerDetailPersonne} from "./detailPersonne";
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchPersonnes();
-});
 
 export async function fetchPersonnes(personnes) {
     try {
@@ -29,4 +26,9 @@ function displayPersonnes(personnes) {
         const html = template(personne);
         container.innerHTML += html;
     });
+    // console.log(document.getElementsByClassName('personne'));
+    // .forEach((e) => {
+    //     console.log(e);
+    // })
+    addEventListnerDetailPersonne();
 }

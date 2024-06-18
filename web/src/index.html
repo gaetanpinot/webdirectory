@@ -9,36 +9,50 @@
 </head>
 
 <body>
-    <div>
-        <label for="service-filter">Filtrer par service:</label>
-        <div id="service-filter-container"></div>
-        <button id="select-all">Select all</button>
-        <button id="deselect-all">Deselect all</button>
+<div>
+    <label for="service-filter">Filtrer par service:</label>
+    <div id="service-filter-container"></div>
+    <button id="select-all">Select all</button>
+    <button id="deselect-all">Deselect all</button>
+</div>
+<div id="entries-container"></div>
+
+<div id="detailPersonne">
+
+</div>
+<script id="templateDetailPersonne" type="text/x-handlebars-template">
+        <img src="{{url_img}}" alt="image utilisateur">
+        <div id="nomDetailPersonne">{{ nom }}</div>
+        <div id="prenomDetailPersonne">{{ prenom }}</div>
+        <div id="mailDetailPersonne">{{ mail }}</div>
+        <div id="num_bureauDetailPersonne">{{ num_bureau }}</div>
+        <div id="serviceDetailPersonne">{{ service.libelle }}</div>
+
+</script>
+
+<script id="service-filter-template"
+        type="text/x-handlebars-template">
+    {{#each this}}
+    <label>
+        <input type="checkbox" class="service-checkbox" value="{{libelle}}"> {{libelle}}
+    </label>
+    {{/each}}
+</script>
+
+<div id="personnes-container"></div>
+
+<script id="personne-template"
+        type="text/x-handlebars-template">
+    <div class="personne">
+        <p><strong>Nom:</strong> {{nom}}</p>
+        <p><strong>Prénom:</strong> {{prenom}}</p>
+        <p><strong>Services:</strong> {{#each service}} {{libelle}} {{/each}}</p>
+        <input type="hidden" value="{{links.detail}}">
     </div>
-    <div id="entries-container"></div>
+</script>
 
-    <script id="service-filter-template"
-            type="text/x-handlebars-template">
-        {{#each this}}
-        <label>
-            <input type="checkbox" class="service-checkbox" value="{{libelle}}"> {{libelle}}
-        </label>
-        {{/each}}
-    </script>
-
-    <div id="personnes-container"></div>
-
-    <script id="personne-template"
-            type="text/x-handlebars-template">
-        <div class="personne">
-            <p><strong>Nom:</strong> {{nom}}</p>
-            <p><strong>Prénom:</strong> {{prenom}}</p>
-            <p><strong>Services:</strong> {{#each service}} {{libelle}} {{/each}}</p>
-        </div>
-    </script>
-
-    <script src="js/index.js"
-            defer></script>
+<script src="js/index.js"
+        defer></script>
 </body>
 
 </html>
