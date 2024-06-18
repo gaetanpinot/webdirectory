@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:webdirectoryapp/models/detail.dart';
+import 'package:webdirectoryapp/models/fonction.dart';
 import 'package:webdirectoryapp/models/personne.dart';
+import 'package:webdirectoryapp/models/telephone.dart';
 
 import '../models/service.dart';
 
@@ -12,6 +14,15 @@ class ApiService {
       final Personne liste;
       final response = await _dio.get(baseUrl + url);
       if (response.statusCode == 200) {
+        print(response.data['data']['personne']['fonctions']);
+        var telephone = response.data['data']['personne']['telephones'] ?? "";
+        var telephoneList = (telephone as List<dynamic>)
+            .map((item) => item.toString())
+            .toList();
+        var fonction = response.data['data']['personne']['fonctions'] ?? "";
+        var fonctionList = (fonction as List<dynamic>)
+            .map((item) => Fonction.fromJson(item))
+            .toList();
         var personne = response.data['data']['personne'];
         var service = response.data['data']['personne']['service'] ?? "";
         Personne personneMap = Personne(
@@ -25,7 +36,10 @@ class ApiService {
               libelle: service['libelle'],
               id: service['id'],
               serviceUrl: service['links']['detail']),
+          numTel: telephoneList.map((e) => Telephone(tel: e)).toList(),
+          fonction: fonctionList,
         );
+        print(personneMap.fonction.length);
         liste = personneMap;
         return liste;
       } else {

@@ -1,3 +1,6 @@
+import 'package:webdirectoryapp/models/fonction.dart';
+import 'package:webdirectoryapp/models/telephone.dart';
+
 import 'service.dart';
 
 class Personne {
@@ -8,6 +11,8 @@ class Personne {
   late String imageUrl;
   final String numBur;
   final String email;
+  final List<Telephone> numTel;
+  final List<Fonction> fonction;
 
   Personne({
     required this.id,
@@ -17,6 +22,8 @@ class Personne {
     required this.imageUrl,
     required this.numBur,
     required this.email,
+    required this.numTel,
+    required this.fonction,
   });
 
   factory Personne.fromJson(Map<String, dynamic> json) {
@@ -28,6 +35,8 @@ class Personne {
       imageUrl: json['links']['detail'],
       numBur: json['numBur'],
       email: json['email'],
+      numTel: [Telephone.fromJson(json['telephones'])],
+      fonction: [Fonction.fromJson(json['fonction'])],
     );
   }
 

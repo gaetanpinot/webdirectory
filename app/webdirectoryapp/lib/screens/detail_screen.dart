@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectoryapp/models/fonction.dart';
 import 'package:webdirectoryapp/models/personne.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -12,6 +13,8 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Fonction> fonctions;
+    fonctions = personne!.fonction;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Détails'),
@@ -68,11 +71,34 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const Text(''),
             const Text(
               'Numéro de bureau :',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(personne!.numBur),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Téléphone :',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: personne!.numTel
+                  .map((telephone) => Text(telephone.tel))
+                  .toList(),
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Fonctions :',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: fonctions
+                  .map((fonction) => Text('- ${fonction.libelle}'))
+                  .toList(),
+            ),
           ],
         ),
       ),

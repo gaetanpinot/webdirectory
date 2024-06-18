@@ -133,7 +133,7 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getPersonnesByServices(mixed $id, $publie = true)
     {
         try {
-            $personnes = Service::where('id', '=', $id)->with('personnes');
+            $personnes = Service::where('id', '=', $id)->with('personnes.service');
 
             if ($publie) {
                 $personnes->whereHas('personnes', function ($query) {

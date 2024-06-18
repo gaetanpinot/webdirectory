@@ -22,13 +22,14 @@ class GetPersonne extends AbstractAction
             $dataAfterFiltering = ['personne' => []];
             $e = $data['personne'];
             $service = [];
-            $s = $e['service'][0];
 
-            $service = [
-                'id' => $s['id'],
-                'libelle' => $s['libelle'],
-                'links' => ['detail' => "/api/services/{$s['id']}"]
-            ];
+            foreach ($e['service'] as $s) {
+                $service[] = [
+                    'id' => $s['id'],
+                    'libelle' => $s['libelle'],
+                    'links' => ['detail' => "/api/services/{$s['id']}"]
+                ];
+            }
 
             $telephones = [];
             foreach ($e['telephone'] as $t) {

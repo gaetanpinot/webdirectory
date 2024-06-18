@@ -1,51 +1,53 @@
 {% extends 'squelette.twig' %}
     {% block titre %}Personnes{% endblock %}
 {% block main %}
-    <h1 id="titrePage">
-        Personnes
-    </h1>
-    <div id="filtre">
-        <p id="filtreActuelle">
+<h1 id="titrePage">
+    Personnes
+</h1>
+<div id="filtre">
+    <p id="filtreActuelle">
 
-            {% if filtre!='' %}
-                Filtré par {{ filtre.libelle }}
-            {% else %}
-                Pas de filtre
-            {% endif %}
-        </p>
+        {% if filtre!='' %}
+            Filtré par {{ filtre.libelle }}
+        {% else %}
+            Pas de filtre
+        {% endif %}
+    </p>
 
-        <form id="formFiltre" method="get" action="">
+    <form id="formFiltre" method="get" action="">
 
-            <select name="filter" id="filtre">
-                {% for s in services %}
-                    <option value="{{ s.id }}">{{ s.libelle }}</option>
-                {% endfor %}
-                <input type="submit" value="Filtrer">
-            </select>
-        </form>
-    </div>
-    <table id="tablePersonne">
-        <tr>
-            <td class="titreColonne">Nom</td>
-            <td class="titreColonne">Prenom</td>
-            <td class="titreColonne">Service</td>
-        </tr>
-        {% for p in personnes %}
-            <tr class="lignePersonne">
-                <td class="nomPersonne"> {{ p.nom }}</td>
-                <td class="prenomPersonne">{{ p.prenom }}</td>
-                <td class="servicePersonn">{{ p.service[0].libelle }}</td>
-                <td class="publierPersonne">
-                    <form action="{{ url_for('publierPersonne',{id:p.id}) }}" method="get">
-                        <input id="boutonPublier" type="submit" value="Publier">
-                    </form>
-                </td>
-                <td class="depublierPersonne">
-                    <form action="{{ url_for('depublierPersonne',{id:p.id}) }}" method="get">
-                        <input id="boutonDepublier" type="submit" value="Depublier">
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+        <select name="filter" id="filtre">
+            {% for s in services %}
+                <option value="{{ s.id }}">{{ s.libelle }}</option>
+            {% endfor %}
+            <input type="submit" value="Filtrer">
+        </select>
+    </form>
+</div>
+<table id="tablePersonne">
+    <tr>
+        <td class="titreColonne">Nom</td>
+        <td class="titreColonne">Prenom</td>
+        <td class="titreColonne">Service</td>
+    </tr>
+    {% for p in personnes %}
+    <tr class="lignePersonne">
+        <td class="nomPersonne"> {{ p.nom }}</td>
+        <td class="prenomPersonne">{{ p.prenom }}</td>
+        <td class="servicePersonne">{% for s in p.service %}
+            {{ s.libelle }}
+            {% endfor %}</td>
+        <td class="publierPersonne">
+            <form action="{{ url_for('publierPersonne',{id:p.id}) }}" method="get">
+                <input id="boutonPublier" type="submit" value="Publier">
+            </form>
+        </td>
+        <td class="depublierPersonne">
+            <form action="{{ url_for('depublierPersonne',{id:p.id}) }}" method="get">
+                <input id="boutonDepublier" type="submit" value="Depublier">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
