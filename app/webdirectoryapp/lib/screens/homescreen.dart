@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectoryapp/models/detail.dart';
 import 'package:webdirectoryapp/models/personne.dart';
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _appBarTitle = const Text('WebDirectory');
   bool _isAscending = true;
   String? _selectedService;
+  bool _isSearching = false;
 
   _HomeScreenState() {
     _filter.addListener(() {
@@ -45,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _isSearching = true;
     _getNames();
     _getServices();
     super.initState();
@@ -57,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         names = fetchedNames;
         filteredNames = names;
       });
+      _isSearching = false;
     } catch (e) {
       debugPrint("Erreur lors de la récupération des noms : $e");
     }
@@ -66,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedService = selectedService;
     });
-    _updateFilter(); // Appliquer les filtres après la sélection d'un service
+    _updateFilter();
   }
 
   void _getServices() async {
@@ -96,27 +100,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateFilter() {
     setState(() {
-      // Filtrer d'abord par service si un service est sélectionné
-      List<Detail> tempFilteredNames = _selectedService != null &&
+      var tempFilteredNames = (_selectedService != null &&
               _selectedService!.isNotEmpty &&
-              _selectedService != "Aucun"
+              _selectedService != "Aucun")
           ? names
-              .where(
-                  (Detail detail) => detail.service.libelle == _selectedService)
+              .where((detail) => detail.service.libelle == _selectedService)
               .toList()
-          : List.from(names);
-
-      // Ensuite, filtrer par texte de recherche si le texte n'est pas vide
+          : names;
       if (_searchText.isNotEmpty) {
-        tempFilteredNames = tempFilteredNames.where((Detail detail) {
-          return detail
-              .getNom()
-              .toLowerCase()
-              .contains(_searchText.toLowerCase());
-        }).toList();
+        tempFilteredNames = tempFilteredNames
+            .where((detail) => detail
+                .getNom()
+                .toLowerCase()
+                .contains(_searchText.toLowerCase()))
+            .toList();
       }
-
-      // Mettre à jour la liste filtrée
       filteredNames = tempFilteredNames;
     });
   }
@@ -178,12 +176,23 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  List<Detail> getListPersSearch(String? service) {
+    filteredNames = names
+        .where((Detail detail) => detail.service.libelle == _selectedService)
+        .toList();
+    return filteredNames;
+  }
+
   Widget _buildPersonneDetailPage(String url, int index) {
     return FutureBuilder<Personne>(
       future: getPers(url),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            ),
+          );
         } else if (snapshot.hasError) {
           return Scaffold(
             appBar: AppBar(title: const Text("Error")),
@@ -237,12 +246,29 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: _toggleSortOrder,
           isAscending: _isAscending,
         ),
+        Switch(
+          value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
+          onChanged: (value) {
+            if (value) {
+              AdaptiveTheme.of(context).setDark();
+            } else {
+              AdaptiveTheme.of(context).setLight();
+            }
+          },
+        )
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isSearching) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       appBar: _buildAppBar(context),
       body: Column(
