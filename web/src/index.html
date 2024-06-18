@@ -31,6 +31,7 @@
             <p><strong>Nom:</strong> {{nom}}</p>
             <p><strong>Prénom:</strong> {{prenom}}</p>
             <p><strong>Services:</strong> {{service.libelle}} </p>
+            <input type="hidden" value="{{links.detail}}">
         </div>
     </script>
 
@@ -68,15 +69,6 @@
 
 <div id="personnes-container"></div>
 
-<script id="personne-template"
-        type="text/x-handlebars-template">
-    <div class="personne">
-        <p><strong>Nom:</strong> {{nom}}</p>
-        <p><strong>Prénom:</strong> {{prenom}}</p>
-        <p><strong>Services:</strong> {{#each service}} {{libelle}} {{/each}}</p>
-        <input type="hidden" value="{{links.detail}}">
-    </div>
-</script>
 
 <script src="js/index.js"
         defer></script>
