@@ -21,10 +21,20 @@ class GetPersonneByService extends AbstractAction
             foreach ($data['services'] as $d) {
                 $personnes = [];
                 foreach ($d['personnes'] as $p) {
+                    $service = [];
+
+                    foreach ($p['service'] as $s) {
+                        $service[] = [
+                            'id' => $s['id'],
+                            'libelle' => $s['libelle'],
+                            'links' => ['detail' => "/api/services/{$s['id']}"]
+                        ];
+                    }
                     $personnes[] = [
                         'id' => $p['id'],
                         'nom' => $p['nom'],
                         'prenom' => $p['prenom'],
+                        'services'=>$service,
                         'links' => ['detail' => "/api/personnes/{$p['id']}"]
                     ];
                 }
