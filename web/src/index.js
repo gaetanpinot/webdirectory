@@ -1,4 +1,10 @@
 import { fetchPersonnes } from "./lib/personneModule";
 
-let personnes = [];
-fetchPersonnes(personnes);
+serviceSelect.addEventListener('change', () => {
+    const selectedServiceId = serviceSelect.value;
+    if (selectedServiceId) {
+        fetchPersonnes(selectedServiceId);
+    }
+});
+
+fetchPersonnes();

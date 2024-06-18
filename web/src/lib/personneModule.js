@@ -1,13 +1,13 @@
 import Handlebars from 'handlebars';
-import {URL_API} from './config.js';
+import { URL_API_PERSONNES } from './config.js';
 import {addEventListnerDetailPersonne} from "./detailPersonne";
 
+export async function fetchPersonnes() {
 
-export async function fetchPersonnes(personnes) {
     try {
-        const response = await fetch(URL_API);
+        const response = await fetch(URL_API_PERSONNES);
         const data = await response.json();
-        personnes = data.data.personnes;
+        const personnes = data.data.personnes;
 
         displayPersonnes(personnes);
     } catch (error) {
@@ -26,9 +26,15 @@ function displayPersonnes(personnes) {
         const html = template(personne);
         container.innerHTML += html;
     });
-    // console.log(document.getElementsByClassName('personne'));
-    // .forEach((e) => {
-    //     console.log(e);
-    // })
     addEventListnerDetailPersonne();
+}
+
+async function filterByService(serviceId) {
+    try {
+        const response = await fetch(`/api/services/${serviceId}/personnes`, { credentials: 'include' });
+        const personnes = await response.json();
+        displayPersonnes(personnes);
+    } catch (error) {
+        console.error('Error fetching personnes:', error);
+    }
 }
