@@ -5739,12 +5739,21 @@
   var import_handlebars2 = __toESM(require_handlebars());
 
   // lib/config.js
-  var URL_API_PERSONNES = "http://localhost:44000/api/personnes?sort=nom-asc";
   var URL_API_BASE = "http://localhost:44000";
-  var URL_API = URL_API_BASE + "/api/personnes?sort=nom-asc";
+  var URL_API_PERSONNES = URL_API_BASE + "/api/personnes?sort=nom-asc";
 
   // lib/detailPersonne.js
   var import_handlebars = __toESM(require_handlebars());
+  function getDetailPersonne(uri) {
+  }
+  function addEventListnerDetailPersonne() {
+    document.querySelectorAll(".personne").forEach((e) => {
+      e.addEventListener(
+        "click",
+        () => getDetailPersonne(e.querySelector("input").value)
+      );
+    });
+  }
 
   // lib/personneModule.js
   function fetchPersonnes() {
@@ -5752,11 +5761,63 @@
       try {
         const response = yield fetch(URL_API_PERSONNES);
         const data = yield response.json();
-        const personnes = data.data.personnes;
+        const personnes2 = data.data.personnes;
+        displayPersonnes(personnes2);
       } catch (error) {
         console.error("Erreur lors de la r\xE9cup\xE9ration des donn\xE9es:", error);
       }
     });
+  }
+  function displayPersonnes(personnes2) {
+    console.log(personnes2);
+    const container = document.getElementById("personnes-list");
+    container.innerHTML = "";
+    const source = document.getElementById("personne-template").innerHTML;
+    const template = import_handlebars2.default.compile(source);
+    personnes2.forEach((personne) => {
+      const html = template(personne);
+      container.innerHTML += html;
+    });
+    addEventListnerDetailPersonne();
+  }
+  function displayPersonnesFilteredByService(data) {
+    console.log(data);
+    displayPersonnes(personnes);
+  }
+  function filterByService(serviceId) {
+    return __async(this, null, function* () {
+      try {
+        console.log(serviceId);
+        const response = yield fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
+        const personnes2 = yield response.json();
+        console.log(personnes2);
+        displayPersonnesFilteredByService(personnes2.data.services[0]);
+      } catch (error) {
+        console.error("Error fetching personnes:", error);
+      }
+    });
+  }
+  function addServicesInSelect(services) {
+    const serviceSelect2 = document.getElementById("service-select");
+    const serviceTemplateSource = document.getElementById("service-template").innerHTML;
+    const serviceTemplate = import_handlebars2.default.compile(serviceTemplateSource);
+    const html = serviceTemplate({ services });
+    serviceSelect2.innerHTML = html;
+  }
+  function fetchServices() {
+    return __async(this, null, function* () {
+      try {
+        const response = yield fetch(`${URL_API_BASE}/api/services`);
+        const services = yield response.json();
+        addServicesInSelect(services.data.services);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    });
+  }
+  function init() {
+    fetchServices();
+    fetchPersonnes();
   }
 
   // index.js
@@ -5764,9 +5825,9 @@
   serviceSelect.addEventListener("change", () => {
     const selectedServiceId = serviceSelect.value;
     if (selectedServiceId) {
-      fetchPersonnes(selectedServiceId);
+      filterByService(selectedServiceId);
     }
   });
-  fetchPersonnes();
+  init();
 })();
 //# sourceMappingURL=index.js.map

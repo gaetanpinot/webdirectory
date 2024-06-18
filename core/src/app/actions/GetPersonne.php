@@ -15,7 +15,6 @@ class GetPersonne extends AbstractAction
 
         try {
             $personne = $annuaireServ->getPersonneById($args['id']);
-            $personne = $personne[0];
 
             $data = compact('personne');
 //            var_dump($data);
@@ -31,6 +30,17 @@ class GetPersonne extends AbstractAction
                 'links' => ['detail' => "/api/services/{$s['id']}"]
             ];
 
+            $telephones = [];
+            foreach ($e['telephone'] as $t) {
+                $telephones[] = $t['num'];
+            }
+            $fonctions = [];
+            foreach ($e['fonction'] as $f) {
+                $fonctions[] = [
+                    'id' => $f['id'],
+                    'libelle' => $f['libelle']
+                ];
+            }
             $dataAfterFiltering['personne'] = [
                 'id' => $e['id'],
                 'nom' => $e['nom'],
@@ -39,6 +49,8 @@ class GetPersonne extends AbstractAction
                 'num_bureau' => $e['num_bureau'],
                 'url_img' => $e['url_img'],
                 'service' => $service,
+                'telephones' => $telephones,
+                'fonctions' => $fonctions,
 
             ];
 

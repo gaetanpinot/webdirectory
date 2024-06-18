@@ -30,7 +30,12 @@
         <div class="personne">
             <p><strong>Nom:</strong> {{nom}}</p>
             <p><strong>Prénom:</strong> {{prenom}}</p>
-            <p><strong>Services:</strong> {{#each service}} {{libelle}} {{/each}}</p>
+            <p><strong>Services:</strong> 
+                {{#each service}}
+                    {{libelle}}
+                {{/each}}
+            </p>
+            <input type="hidden" value="{{links.detail}}">
         </div>
     </script>
 

@@ -1,12 +1,14 @@
-import { fetchPersonnes } from "./lib/personneModule";
+import { fetchPersonnes, filterByService } from "./lib/personneModule";
+import { init } from "./lib/personneModule";
+
 
 const serviceSelect = document.getElementById('service-select');
 
 serviceSelect.addEventListener('change', () => {
     const selectedServiceId = serviceSelect.value;
     if (selectedServiceId) {
-        fetchPersonnes(selectedServiceId);
+        filterByService(selectedServiceId);
     }
 });
 
-fetchPersonnes();
+init();
