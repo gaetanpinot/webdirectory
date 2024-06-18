@@ -29,7 +29,7 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getPersonneById(int $id, $publie = true): array
     {
         try {
-            $personne = Personne::where('id', '=', $id)->with('service');
+            $personne = Personne::where('id', '=', $id)->with('service','fonction','telephone');
             if ($publie) {
                 $personne = $personne->where('publie', '=', true);
             }
@@ -38,7 +38,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             if (!$personne) throw new NotFoundAnnuaireException('Personne non existante ou non publié');
             if (count($personne) == 0) throw new NotFoundAnnuaireException('Personne non existante ou non publié');
 
-            return $personne->toArray();
+            return $personne->toArray()[0];
 
         } catch (ModelNotFoundException $e) {
             throw new NotFoundAnnuaireException('Personne introuvable');
@@ -102,7 +102,7 @@ class AnnuaireService implements AnnuaireServiceInterface
         }
     }
 
-    public function getPersonnesWithServices($order = "", $publie = true)
+    public function getPersonnesWithServices($order = "", $publie = true): array
     {
         try {
             $personnes = Personne::with('service');
