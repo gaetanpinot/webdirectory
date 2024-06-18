@@ -1119,7 +1119,7 @@
     "node_modules/handlebars/dist/cjs/handlebars/no-conflict.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
-      exports["default"] = function(Handlebars2) {
+      exports["default"] = function(Handlebars3) {
         (function() {
           if (typeof globalThis === "object")
             return;
@@ -1130,11 +1130,11 @@
           delete Object.prototype.__magic__;
         })();
         var $Handlebars = globalThis.Handlebars;
-        Handlebars2.noConflict = function() {
-          if (globalThis.Handlebars === Handlebars2) {
+        Handlebars3.noConflict = function() {
+          if (globalThis.Handlebars === Handlebars3) {
             globalThis.Handlebars = $Handlebars;
           }
-          return Handlebars2;
+          return Handlebars3;
         };
       };
       module.exports = exports["default"];
@@ -5736,15 +5736,39 @@
   });
 
   // lib/personneModule.js
-  var import_handlebars = __toESM(require_handlebars());
+  var import_handlebars2 = __toESM(require_handlebars());
 
   // lib/config.js
-  var URL_API = "http://localhost:44000/api/personnes?sort=nom-asc";
+  var URL_API_BASE = "http://localhost:44000";
+  var URL_API = URL_API_BASE + "/api/personnes?sort=nom-asc";
+
+  // lib/detailPersonne.js
+  var import_handlebars = __toESM(require_handlebars());
+  var templatePersonneDetail = import_handlebars.default.compile(
+    document.querySelector("#templateDetailPersonne").innerHTML
+  );
+  function getDetailPersonne(uri) {
+    let urlDetailPersonne = URL_API_BASE + uri;
+    fetch(urlDetailPersonne).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((personne) => {
+            document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(personne.data.personne);
+          });
+        }
+      }
+    );
+  }
+  function addEventListnerDetailPersonne() {
+    document.querySelectorAll(".personne").forEach((e) => {
+      e.addEventListener(
+        "click",
+        () => getDetailPersonne(e.querySelector("input").value)
+      );
+    });
+  }
 
   // lib/personneModule.js
-  document.addEventListener("DOMContentLoaded", () => {
-    fetchPersonnes();
-  });
   function fetchPersonnes(personnes2) {
     return __async(this, null, function* () {
       try {
@@ -5761,11 +5785,12 @@
     const container = document.getElementById("personnes-container");
     container.innerHTML = "";
     const source = document.getElementById("personne-template").innerHTML;
-    const template = import_handlebars.default.compile(source);
+    const template = import_handlebars2.default.compile(source);
     personnes2.forEach((personne) => {
       const html = template(personne);
       container.innerHTML += html;
     });
+    addEventListnerDetailPersonne();
   }
 
   // index.js

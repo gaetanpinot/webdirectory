@@ -1,7 +1,9 @@
 import Handlebars from 'handlebars';
 import { URL_API_PERSONNES } from './config.js';
+import {addEventListnerDetailPersonne} from "./detailPersonne";
 
 export async function fetchPersonnes() {
+
     try {
         const response = await fetch(URL_API_PERSONNES);
         const data = await response.json();
@@ -24,6 +26,7 @@ function displayPersonnes(personnes) {
         const html = template(personne);
         container.innerHTML += html;
     });
+    addEventListnerDetailPersonne();
 }
 
 async function filterByService(serviceId) {
@@ -34,11 +37,4 @@ async function filterByService(serviceId) {
     } catch (error) {
         console.error('Error fetching personnes:', error);
     }
-}
-
-function filterChange() {
-    const selectedServices = Array.from(document.querySelectorAll('.service-checkbox:checked')).map(cb => cb.value);
-    let filteredEntries = 
-
-    displayEntries(filteredEntries);
 }
