@@ -3,13 +3,12 @@ import { URL_API_PERSONNES } from './config.js';
 import {addEventListnerDetailPersonne} from "./detailPersonne";
 
 export async function fetchPersonnes() {
-
     try {
         const response = await fetch(URL_API_PERSONNES);
         const data = await response.json();
         const personnes = data.data.personnes;
 
-        displayPersonnes(personnes);
+        // displayPersonnes(personnes);
     } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
     }

@@ -5739,62 +5739,34 @@
   var import_handlebars2 = __toESM(require_handlebars());
 
   // lib/config.js
+  var URL_API_PERSONNES = "http://localhost:44000/api/personnes?sort=nom-asc";
   var URL_API_BASE = "http://localhost:44000";
   var URL_API = URL_API_BASE + "/api/personnes?sort=nom-asc";
 
   // lib/detailPersonne.js
   var import_handlebars = __toESM(require_handlebars());
-  var templatePersonneDetail = import_handlebars.default.compile(
-    document.querySelector("#templateDetailPersonne").innerHTML
-  );
-  function getDetailPersonne(uri) {
-    let urlDetailPersonne = URL_API_BASE + uri;
-    fetch(urlDetailPersonne).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((personne) => {
-            document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(personne.data.personne);
-          });
-        }
-      }
-    );
-  }
-  function addEventListnerDetailPersonne() {
-    document.querySelectorAll(".personne").forEach((e) => {
-      e.addEventListener(
-        "click",
-        () => getDetailPersonne(e.querySelector("input").value)
-      );
-    });
-  }
 
   // lib/personneModule.js
-  function fetchPersonnes(personnes2) {
+  function fetchPersonnes() {
     return __async(this, null, function* () {
       try {
-        const response = yield fetch(URL_API);
+        const response = yield fetch(URL_API_PERSONNES);
         const data = yield response.json();
-        personnes2 = data.data.personnes;
-        displayPersonnes(personnes2);
+        const personnes = data.data.personnes;
       } catch (error) {
         console.error("Erreur lors de la r\xE9cup\xE9ration des donn\xE9es:", error);
       }
     });
   }
-  function displayPersonnes(personnes2) {
-    const container = document.getElementById("personnes-container");
-    container.innerHTML = "";
-    const source = document.getElementById("personne-template").innerHTML;
-    const template = import_handlebars2.default.compile(source);
-    personnes2.forEach((personne) => {
-      const html = template(personne);
-      container.innerHTML += html;
-    });
-    addEventListnerDetailPersonne();
-  }
 
   // index.js
-  var personnes = [];
-  fetchPersonnes(personnes);
+  var serviceSelect = document.getElementById("service-select");
+  serviceSelect.addEventListener("change", () => {
+    const selectedServiceId = serviceSelect.value;
+    if (selectedServiceId) {
+      fetchPersonnes(selectedServiceId);
+    }
+  });
+  fetchPersonnes();
 })();
 //# sourceMappingURL=index.js.map
