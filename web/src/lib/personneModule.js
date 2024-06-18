@@ -1,16 +1,11 @@
 import Handlebars from 'handlebars';
-import { URL_API } from './config.js';
+import { URL_API_PERSONNES } from './config.js';
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchPersonnes();
-});
-
-export async function fetchPersonnes(personnes) {
+export async function fetchPersonnes() {
     try {
-        const response = await fetch(URL_API);
+        const response = await fetch(URL_API_PERSONNES);
         const data = await response.json();
-        personnes = data.data.personnes;
+        const personnes = data.data.personnes;
 
         displayPersonnes(personnes);
     } catch (error) {
@@ -29,4 +24,21 @@ function displayPersonnes(personnes) {
         const html = template(personne);
         container.innerHTML += html;
     });
+}
+
+async function filterByService(serviceId) {
+    try {
+        const response = await fetch(`/api/services/${serviceId}/personnes`, { credentials: 'include' });
+        const personnes = await response.json();
+        displayPersonnes(personnes);
+    } catch (error) {
+        console.error('Error fetching personnes:', error);
+    }
+}
+
+function filterChange() {
+    const selectedServices = Array.from(document.querySelectorAll('.service-checkbox:checked')).map(cb => cb.value);
+    let filteredEntries = 
+
+    displayEntries(filteredEntries);
 }

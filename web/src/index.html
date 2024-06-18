@@ -10,23 +10,20 @@
 
 <body>
     <div>
-        <label for="service-filter">Filtrer par service:</label>
-        <div id="service-filter-container"></div>
-        <button id="select-all">Select all</button>
-        <button id="deselect-all">Deselect all</button>
-    </div>
-    <div id="entries-container"></div>
+        <select id="service-select">
 
-    <script id="service-filter-template"
+        </select>
+        <section id="personnes-list">
+
+        </section>
+    </div>
+
+    <script id="service-template"
             type="text/x-handlebars-template">
-        {{#each this}}
-        <label>
-            <input type="checkbox" class="service-checkbox" value="{{libelle}}"> {{libelle}}
-        </label>
+        {{#each services}}
+        <option value="{{id}}">{{libelle}}</option>
         {{/each}}
     </script>
-
-    <div id="personnes-container"></div>
 
     <script id="personne-template"
             type="text/x-handlebars-template">
