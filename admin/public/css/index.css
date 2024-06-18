@@ -1,8 +1,12 @@
+html {
+    font-family: Ubuntu;
+}
+
 #navbar {
     display: flex;
     flex-direction: row;
-    /*justify-content: center;*/
-    /*align-content: center;*/
+    margin-left: 1em;
+    margin-right: 1em;
     align-items: center;
 }
 
@@ -42,14 +46,18 @@ label {
     padding-right: 10px; /* Adjust the padding between label and input as needed */
 }
 
-input {
-    width: 100%;
-    margin: 0.3em;
-    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
-}
 
 form > * {
     margin: 0.5em;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.2em;
+    margin: 0.3em;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+    border: solid 1px dimgray;
+    border-radius: 0.3em;
 }
 
 #titreNavbar {
@@ -60,16 +68,16 @@ form > * {
     border: inset 0.20em cyan;
     border-radius: 0.3em;
     padding: 0.4em;
-
 }
 
-.titreColonne{
+.titreColonne {
     font-weight: bold;
 }
+
 #tablePersonne {
 
 }
 
 #tablePersonne tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: lightcyan;
 }
