@@ -9,6 +9,34 @@
 </head>
 
 <body>
+    <div>
+        <select id="service-select">
+
+        </select>
+        <section id="personnes-list">
+
+        </section>
+    </div>
+
+    <script id="service-template"
+            type="text/x-handlebars-template">
+        {{#each services}}
+        <option value="{{id}}">{{libelle}}</option>
+        {{/each}}
+    </script>
+
+    <script id="personne-template"
+            type="text/x-handlebars-template">
+        <div class="personne">
+            <p><strong>Nom:</strong> {{nom}}</p>
+            <p><strong>Prénom:</strong> {{prenom}}</p>
+            <p><strong>Services:</strong> {{service.libelle}} </p>
+            <input type="hidden" value="{{links.detail}}">
+        </div>
+    </script>
+
+    <script src="js/index.js"
+            defer></script>
 <div>
     <label for="service-filter">Filtrer par service:</label>
     <div id="service-filter-container"></div>
@@ -41,15 +69,6 @@
 
 <div id="personnes-container"></div>
 
-<script id="personne-template"
-        type="text/x-handlebars-template">
-    <div class="personne">
-        <p><strong>Nom:</strong> {{nom}}</p>
-        <p><strong>Prénom:</strong> {{prenom}}</p>
-        <p><strong>Services:</strong> {{#each service}} {{libelle}} {{/each}}</p>
-        <input type="hidden" value="{{links.detail}}">
-    </div>
-</script>
 
 <script src="js/index.js"
         defer></script>

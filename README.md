@@ -9,7 +9,8 @@ Créer la base de donnée `webdir` sur adminer et la remplir avec le fichier `li
 ## SQL
 
 Structure de la base de donnée:  
-personne(pk int id, varchar nom, varchar prenom, varchar num_bureau, varchar mail, varchar url_img)  
+
+personne(pk int id, varchar nom, varchar prenom, varchar num_bureau, varchar mail, varchar url_img, boolean publie)  
 
 personne_service(pk fk int id_personne, pk fk int id_service)  
 
