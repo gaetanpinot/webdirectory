@@ -16,7 +16,6 @@ use web\admin\app\actions\PostServiceCreate;
 use web\admin\app\actions\Racine;
 use web\admin\core\services\auth\Auth;
 
-
 return function (App $app): App {
 
     $app->get('[/]', Racine::class)->setName('racine');

@@ -1,0 +1,1 @@
+export const URL_API = 'http://localhost:44000/api/personnes?sort=nom-asc';

@@ -10,7 +10,6 @@ use web\admin\core\services\entries\AnnuaireService;
 
 class PostLogin extends AbstractAction
 {
-
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $anService = new AnnuaireService();
