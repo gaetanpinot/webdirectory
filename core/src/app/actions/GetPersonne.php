@@ -49,7 +49,7 @@ class GetPersonne extends AbstractAction
                 'mail' => $e['mail'],
                 'num_bureau' => $e['num_bureau'],
                 'url_img' => $e['url_img'],
-                'service' => $service,
+                'services' => $service,
                 'telephones' => $telephones,
                 'fonctions' => $fonctions,
 

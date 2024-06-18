@@ -35,7 +35,7 @@ class GetAllPersonne extends AbstractAction
                     'nom' => $e['nom'],
                     'prenom' => $e['prenom'],
                     'url_img' => $e['url_img'],
-                    'service' => $service,
+                    'services' => $service,
                     'links' => ['detail' => "/api/personnes/{$e['id']}"]
 
                 ];
