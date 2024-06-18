@@ -1,6 +1,8 @@
 <?php
 
 namespace web\api\app\actions;
+
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use web\api\core\services\entries\AnnuaireService;
@@ -21,9 +23,8 @@ class GetFonction extends AbstractAction
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
 
-        }catch (\Exception $e){
+        } catch (Exception $e) {
             return $response->withStatus(500);
-            //TODO EXCEPTION
         }
     }
 }

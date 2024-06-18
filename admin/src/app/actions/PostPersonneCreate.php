@@ -8,12 +8,19 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 use web\admin\core\services\entries\AnnuaireService;
 use web\admin\core\services\NotFoundAnnuaireException;
+use web\admin\utils\CsrfException;
+use web\admin\utils\CsrfToken;
 
 class PostPersonneCreate extends AbstractAction
 {
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+        try {
+            CsrfToken::check($_POST['token']);
+        } catch (CsrfException $e) {
+            throw new HttpNotFoundException($request, "Questionnaire invalide");
+        }
         $champsCreatePersonne = [];
         $champsCreatePersonne['nom'] = filter_var($_POST['nom'], FILTER_SANITIZE_SPECIAL_CHARS);
         $champsCreatePersonne['prenom'] = filter_var($_POST['prenom'], FILTER_SANITIZE_SPECIAL_CHARS);

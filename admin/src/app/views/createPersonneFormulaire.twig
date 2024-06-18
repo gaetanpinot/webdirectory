@@ -1,37 +1,40 @@
 {% extends 'squelette.twig' %}
+    {% block titre %}Création personne{% endblock %}
 {% block main %}
-<form class="formulaireCreatePersonne" method="post">
+    <form class="formulaireCreatePersonne" method="post">
 
-    <label for="nom">Nom</label>
-    <input type="text" id="champNom"
-           name="nom" required>
+        <label for="champNom">Nom</label>
+        <input type="text" id="champNom"
+               name="nom" required>
 
-    <label for="prenom">Prenom</label>
-    <input type="text" id="champPrenom"
-           name="prenom" required>
+        <label for="champPrenom">Prenom</label>
+        <input type="text" id="champPrenom"
+               name="prenom" required>
 
-    <label for="num_bureau">Numero de bureau</label>
-    <input type="number" id="champNumBureau"
-           name="num_bureau" required>
+        <label for="champNumBureau">Numero de bureau</label>
+        <input type="number" id="champNumBureau"
+               name="num_bureau" required>
 
-    <label for="mail">Email</label>
-    <input type="email" id="champMail"
-           name="mail" required>
+        <label for="champMail">Email</label>
+        <input type="email" id="champMail"
+               name="mail" required>
 
 
-    <label for="url_img">Url Image</label>
-    <input type="url" id="champUrl"
-           name="url_img" >
+        <label for="champUrl">Url Image</label>
+        <input type="url" id="champUrl"
+               name="url_img">
 
-    <label for="id_service">Service</label>
-    <select name="id_service" id="selectService">
-        {% for s in services %}
-            <option value="{{ s.id }}">{{ s.libelle }}</option>
+        <label for="selectService">Service</label>
+        <select name="id_service" id="selectService">
+            {% for s in services %}
+                <option value="{{ s.id }}">{{ s.libelle }}</option>
 
-        {% endfor %}
-    </select>
+            {% endfor %}
+        </select>
 
-    <input type="submit" value="Submit">
+        <input type="hidden" name="token" value="{{ token }}">
 
-</form>
+        <input type="submit" id="submit" value="Submit">
+
+    </form>
 {% endblock %}

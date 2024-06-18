@@ -22,12 +22,13 @@ class Personne extends Model
     //telephone_personne(pk fk int id_personne, varchar num)
     public function telephone()
     {
-        return $this->hasMany('web\api\core\domain\entities\Telephone','id_personne');
+        return $this->hasMany('web\api\core\domain\entities\Telephone', 'id_personne');
     }
 
     //personne_service(pk fk int id_personne, pk fk int id_service)
 
-    public function service(){
-        return $this->belongsToMany(Service::class,'personne_service','id_personne','id_service');
+    public function service()
+    {
+        return $this->belongsToMany(Service::class, 'personne_service', 'id_personne', 'id_service');
     }
 }

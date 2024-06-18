@@ -1,11 +1,15 @@
 {% block navbar %}
-<div id="navbar">
-    <p id="titreNavbar">Webdir Admin</p>
-    <a href="{{url_for('racine')}}">Accueil</a>
-    <a href="{{url_for('createPersonne')}}">Créer personne</a>
-    <a href="{{ url_for('createService') }}">Créer service</a>
-    {% if isSuperAdmin==true %}
-    <a href="{{url_for('createAdmin')}}">Créer admin</a>
-    {% endif %}
-</div>
+    <div id="navbar">
+        <p id="titreNavbar">Webdir Admin</p>
+        {% if authOk %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+        <a href="{{ url_for('racine') }}">Accueil</a>
+        <a href="{{ url_for('allPersonnes') }}">Toute les personnes</a>
+        <a href="{{ url_for('createPersonne') }}">Créer personne</a>
+        <a href="{{ url_for('createService') }}">Créer service</a>
+        <a href="{{ url_for('createAdmin') }}">Créer admin</a>
+    </div>
 {% endblock %}

@@ -2,8 +2,10 @@
 
 namespace web\api\app\actions;
 
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+
 class Racine extends AbstractAction
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
@@ -15,8 +17,7 @@ class Racine extends AbstractAction
             return $response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
-        }
-        catch (\Exception $e){
+        } catch (Exception $e) {
             return $response->withStatus(500);
         }
     }

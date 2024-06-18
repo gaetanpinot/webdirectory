@@ -5,6 +5,7 @@ namespace web\api\app\actions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use web\api\core\services\entries\AnnuaireService;
+use web\api\core\services\NotFoundAnnuaireException;
 
 class GetPersonne extends AbstractAction
 {
@@ -34,9 +35,9 @@ class GetPersonne extends AbstractAction
                 'id' => $e['id'],
                 'nom' => $e['nom'],
                 'prenom' => $e['prenom'],
-                'mail'=>$e['mail'],
-                'num_bureau'=>$e['num_bureau'],
-                'url_img'=>$e['url_img'],
+                'mail' => $e['mail'],
+                'num_bureau' => $e['num_bureau'],
+                'url_img' => $e['url_img'],
                 'service' => $service,
 
             ];
@@ -48,10 +49,8 @@ class GetPersonne extends AbstractAction
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
 
-        }catch (\Exception $e)
-{
-return $response->withStatus(500);
-    //TODO EXCEPTION
-}
-}
+        } catch (NotFoundAnnuaireException $e) {
+            return $response->withStatus(500);
+        }
+    }
 }

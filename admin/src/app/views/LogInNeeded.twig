@@ -1,2 +1,7 @@
-<h1>You are NOT logged in</h1>
-<a href = "/login">Go to login page</a>
+{% extends "squelette.twig" %}
+
+{% block titre %}Log in{% endblock %}
+{% block main %}
+    <h1>You are NOT logged in</h1>
+    <a href="/login">Go to login page</a>
+{% endblock %}

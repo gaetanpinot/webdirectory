@@ -4,14 +4,22 @@ namespace web\admin\app\actions;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
-use Slim\Routing\RouteContext;
 use web\admin\core\services\entries\AnnuaireService;
+use web\admin\utils\CsrfException;
+use web\admin\utils\CsrfToken;
 
 class PostLogin extends AbstractAction
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+
+        try {
+            CsrfToken::check($_POST['token']);
+        } catch (CsrfException $e) {
+            throw new HttpNotFoundException($request, "Questionnaire invalide");
+        }
         $anService = new AnnuaireService();
         $twig = Twig::fromRequest($request);
 

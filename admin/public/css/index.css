@@ -1,0 +1,75 @@
+#navbar {
+    display: flex;
+    flex-direction: row;
+    /*justify-content: center;*/
+    /*align-content: center;*/
+    align-items: center;
+}
+
+#navbar > a {
+    margin: 0.5em;
+    padding: 0.4em;
+    color: black;
+    text-decoration-line: none;
+    background: lightgray;
+    border-radius: 0.7em;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px; /* Adjust the gap between label and input as needed */
+    align-items: center;
+    /*display:flex;*/
+    /*flex-direction: row;*/
+    /*flex-wrap: wrap;*/
+    /*width:70%;*/
+
+}
+
+form > #submit {
+    grid-column: 1/ span 2;
+}
+
+label {
+    text-align: right;
+    padding-right: 10px; /* Adjust the padding between label and input as needed */
+}
+
+input {
+    width: 100%;
+    margin: 0.3em;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+}
+
+form > * {
+    margin: 0.5em;
+}
+
+#titreNavbar {
+    display: flex;
+    white-space: nowrap;
+    font-size: xx-large;
+    font-weight: bold;
+    border: inset 0.20em cyan;
+    border-radius: 0.3em;
+    padding: 0.4em;
+
+}
+
+.titreColonne{
+    font-weight: bold;
+}
+#tablePersonne {
+
+}
+
+#tablePersonne tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

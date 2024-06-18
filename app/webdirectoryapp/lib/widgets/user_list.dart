@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectoryapp/models/detail.dart';
 
 class UserList extends StatelessWidget {
-  final List<Map<String, dynamic>> filteredNames;
+  final List<Detail> filteredNames;
   final void Function(int index) onTap;
 
-  UserList({required this.filteredNames, required this.onTap});
+  const UserList({super.key, required this.filteredNames, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +13,14 @@ class UserList extends StatelessWidget {
       itemCount: filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          leading: filteredNames[index]['imageUrl'] != null
+          leading: filteredNames[index].imgUrl.isNotEmpty
               ? CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(filteredNames[index]['imageUrl']),
+                  backgroundImage: NetworkImage(filteredNames[index].imgUrl),
                 )
-              : CircleAvatar(), 
-          title: Text(filteredNames[index]['nom']),
-          subtitle: Text(filteredNames[index]['prenom']),
+              : const CircleAvatar(),
+          title: Text(
+              '${filteredNames[index].getNom()} ${filteredNames[index].getPrenom()}'),
+          subtitle: Text(filteredNames[index].getServiceLibelle()),
           onTap: () => onTap(index),
         );
       },

@@ -2,11 +2,13 @@
 
 namespace web\api\app\actions;
 
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use web\api\core\services\entries\AnnuaireService;
 
-class GetService extends AbstractAction{
+class GetService extends AbstractAction
+{
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
@@ -16,7 +18,7 @@ class GetService extends AbstractAction{
             $service = $annuaireServ->getServiceById($args['id']);
 
             $data = compact('service');
-            $data['service']['links']=['detail'=>"/api/services/{$data['service']['id']}"];
+            $data['service']['links'] = ['detail' => "/api/services/{$data['service']['id']}"];
 //            $dataAfterFiltering=['service'=>[]];
 //            foreach($data['service'] as $d){
 //                $d['links']=['detail'=>"/api/services/{$d['id']}"];
@@ -28,9 +30,8 @@ class GetService extends AbstractAction{
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
 
-        }catch (\Exception $e){
+        } catch (Exception $e) {
             return $response->withStatus(500);
-            //TODO EXCEPTION
         }
     }
 }

@@ -9,6 +9,7 @@ class Admin extends Model
 {
 
     use HasUuids;
+
     protected $table = 'admin_user';
     protected $primaryKey = 'id';
     public $timestamps = false;

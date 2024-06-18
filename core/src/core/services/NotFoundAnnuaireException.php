@@ -2,7 +2,9 @@
 
 namespace web\api\core\services;
 
-class NotFoundAnnuaireException extends \Exception
+use Exception;
+
+class NotFoundAnnuaireException extends Exception
 {
 
 }

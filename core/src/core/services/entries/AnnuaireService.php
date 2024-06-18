@@ -1,12 +1,13 @@
 <?php
 
 namespace web\api\core\services\entries;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use web\api\core\domain\entities\Fonction;
 use web\api\core\domain\entities\Personne;
 use web\api\core\domain\entities\Service;
-use web\api\core\domain\entities\Telephone;
+use web\api\core\services\NotFoundAnnuaireException;
 
 class AnnuaireService implements AnnuaireServiceInterface
 {
@@ -21,24 +22,26 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $fonction;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Fonction introuvable');
         }
     }
 
-    public function getPersonneById(int $id): array
+    public function getPersonneById(int $id, $publie = true): array
     {
         try {
+            $personne = Personne::where('id', '=', $id)->with('service');
+            if ($publie) {
+                $personne = $personne->where('publie', '=', true);
+            }
+            $personne = $personne->get();
 
-            $personne = Personne::where('id','=',$id)->with('service')->get();
-
-            if (!$personne) throw new ModelNotFoundException();
+            if (!$personne) throw new NotFoundAnnuaireException('Personne non existante ou non publié');
+            if (count($personne) == 0) throw new NotFoundAnnuaireException('Personne non existante ou non publié');
 
             return $personne->toArray();
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
@@ -54,8 +57,7 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $service;
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Service introuvable');
         }
     }
 
@@ -70,39 +72,44 @@ class AnnuaireService implements AnnuaireServiceInterface
             return $telephones->toArray();
 
         } catch (ModelNotFoundException $e) {
-//            throw new AnnuaireServiceNotFoundException("Erreur interne", 500);
-            //TODO Exception
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
     public function getServices()
     {
-        try{
+        try {
             $services = Service::get();
 
-            return($services->toArray());
+            return ($services->toArray());
 
-        }catch (QueryException $e ){
+        } catch (QueryException $e) {
 
+            throw new NotFoundAnnuaireException('Erreur de base donnée');
 
         }
     }
 
     public function getFonctions()
     {
-        try{
+        try {
             $fonction = Fonction::get();
 
             return $fonction->toArray();
-        }catch(QueryException $e){
+        } catch (QueryException $e) {
 
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
         }
     }
 
-    public function getPersonnesWithServices($order=""){
-        try{
-            $personnes=Personne::with('service');
-            switch($order){
+    public function getPersonnesWithServices($order = "", $publie = true)
+    {
+        try {
+            $personnes = Personne::with('service');
+            if ($publie) {
+                $personnes = $personnes->where('publie', '=', true);
+            }
+            switch ($order) {
                 case 'nom-desc':
                     $personnes->orderByDesc('nom');
                     break;
@@ -113,38 +120,51 @@ class AnnuaireService implements AnnuaireServiceInterface
                     break;
 
             }
-            $personnes=$personnes->get();
+            $personnes = $personnes->get();
             return $personnes->toArray();
-        }catch (QueryException $e){
-
+        } catch (QueryException $e) {
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
 
-    public function getPersonnesByServices(mixed $id)
+    public function getPersonnesByServices(mixed $id, $publie = true)
     {
-        try{
-//            $personnes=Personne::whereHas('service',function($query) use($id){
-//                $query->where('id','=',$id);
-//            })->get();
-            $personnes=Service::where('id','=',$id)->with('personnes')->get();
+        try {
+            $personnes = Service::where('id', '=', $id)->with('personnes');
+
+            if ($publie) {
+                $personnes->whereHas('personnes', function ($query) {
+                    $query->where('publie', '=', true);
+                });
+            }
+            $personnes = $personnes->get();
+
             return $personnes->toArray();
-        }catch (QueryException $e){
+        } catch (QueryException $e) {
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
+        } catch (ModelNotFoundException $e) {
 
-        }catch (ModelNotFoundException $e){
-
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 
-    public function getPersonnesContainName(string $name)
+    public function getPersonnesContainName(string $name, $publie = true)
     {
-        try{
-            $personnes=Personne::where('nom','like','%'.$name.'%')->get();
-            return $personnes->toArray();
-        }catch (QueryException $e){
+        try {
+            $personnes = Personne::where('nom', 'like', '%' . $name . '%');
+            if ($publie) {
+                $personnes = $personnes->where('publie', '=', true);
+            }
+            return $personnes->get()->toArray();
+        } catch (QueryException $e) {
 
-        }catch (ModelNotFoundException $e){
+            throw new NotFoundAnnuaireException('Erreur de base de donnée');
+        } catch (ModelNotFoundException $e) {
 
+            throw new NotFoundAnnuaireException('Personne introuvable');
         }
     }
 }

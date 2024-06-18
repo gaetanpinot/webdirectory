@@ -2,23 +2,27 @@
 <html>
 
 <head>
-    <title>{% block titre%}{%endblock%} - Webdir Admin</title>
+    <title>{% block titre %}{% endblock %} - Webdir</title>
+    <link rel="stylesheet" href="/css/index.css">
     <meta charset="UTF-8"/>
 </head>
 
+<header>
+
+    {% use 'navbar.twig' with navbar as NAVBAR %}
+    {% block navbar %}
+        {{ block('NAVBAR') }}
+    {% endblock %}
+</header>
 <body>
-{% use 'navbar.twig' with navbar as NAVBAR %}
-{% block navbar %}
-    {{ block('NAVBAR') }}
-{% endblock %}
 <main>
     {% block main %}
     {% endblock %}
 </main>
 
+</body>
+
 <footer>
 
 </footer>
-</body>
-
 </html>
