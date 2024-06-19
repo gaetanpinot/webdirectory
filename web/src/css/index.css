@@ -8,8 +8,7 @@ main {
     justify-content: space-between;
 }
 
-
-#personnes-container {
+#personnes-list{
     margin: 1em;
     height: 85vh;
     width: 65vw;

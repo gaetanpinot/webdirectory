@@ -12,43 +12,39 @@
 </head>
 
 <body>
-    <div id="sort-icons">
-        <i id="sort-asc"
-           class="fas fa-sort-alpha-up"
-           title="Tri ascendant"></i>
-        <i id="sort-desc"
-           class="fas fa-sort-alpha-down"
-           title="Tri descendant"></i>
+<div id="sort-icons">
+    <i id="sort-asc"
+       class="fas fa-sort-alpha-up"
+       title="Tri ascendant"></i>
+    <i id="sort-desc"
+       class="fas fa-sort-alpha-down"
+       title="Tri descendant"></i>
+</div>
+
+<div id="search-container">
+    <label for="search-input">Rechercher par nom :</label>
+    <input type="text"
+           id="search-input"
+           placeholder="Entrez le nom">
+</div>
+
+
+<main>
+<div>
+    <select id="service-select">
+
+    </select>
+
+    <div id="personnes-list">
+
     </div>
+</div>
 
-    <div id="search-container">
-        <label for="search-input">Rechercher par nom :</label>
-        <input type="text"
-               id="search-input"
-               placeholder="Entrez le nom">
-    </div>
+<div id="detailPersonne"></div>
+</main>
 
-    <div id="detailPersonne"></div>
-
-    <div>
-        <select id="service-select">
-
-        </select>
-
-        <section id="personnes-list">
-
-        </section>
-    </div>
-
-    <script id="service-template"
-            type="text/x-handlebars-template">
-    {{#each services}}
-    <option value="{{id}}">{{libelle}}</option>
-    {{/each}}
-</script>
-
-    <script id="personne-template"
-            type="text/x-handlebars-template">
+<script id="personne-template"
+        type="text/x-handlebars-template">
     <div class="personne">
         <p><strong>Nom:</strong> {{nom}}</p>
         <p><strong>Prénom:</strong> {{prenom}}</p>
@@ -59,48 +55,39 @@
     </div>
 </script>
 
-    <script id="service-template"
-            type="text/x-handlebars-template">
+<script id="service-template"
+        type="text/x-handlebars-template">
+    {{#each services}}
+    <option value="{{id}}">{{libelle}}</option>
+    {{/each}}
+</script>
+
+
+<script id="templateDetailPersonne"
+        type="text/x-handlebars-template">
+    <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
+    <div id="nomDetailPersonne">{{ nom }}</div>
+    <div id="prenomDetailPersonne">{{ prenom }}</div>
+    <div id="mailDetailPersonne">{{ mail }}</div>
+    <div id="num_bureauDetailPersonne">{{ num_bureau }}</div>
+    <div id="serviceDetailPersonne">
         {{#each services}}
-        <option value="{{id}}">{{libelle}}</option>
+        {{this.libelle}}
         {{/each}}
-    </script>
-
-    <script id="personne-template"
-            type="text/x-handlebars-template">
-        <div class="personne">
-            <p><strong>Nom:</strong> {{nom}}</p>
-            <p><strong>Prénom:</strong> {{prenom}}</p>
-            <p><strong>Services:</strong> 
-                {{#each services}}
-                    {{libelle}}
-                {{/each}}
-            </p>
-            <input type="hidden" value="{{links.detail}}">
-        </div>
-    </script>
-
     </div>
-    <script id="templateDetailPersonne"
-            type="text/x-handlebars-template">
-        <img src="{{url_img}}" alt="image utilisateur">
-        <div id="nomDetailPersonne">{{ nom }}</div>
-        <div id="prenomDetailPersonne">{{ prenom }}</div>
-        <div id="mailDetailPersonne">{{ mail }}</div>
-        <div id="num_bureauDetailPersonne">{{ num_bureau }}</div>
-        <div id="serviceDetailPersonne">{{ service.libelle }}</div>
-    </script>
-    <script id="service-filter-template"
-            type="text/x-handlebars-template">
-        {{#each this}}
-        <label>
-            <input type="checkbox" class="service-checkbox" value="{{libelle}}"> {{libelle}}
-        </label>
-        {{/each}}
-    </script>
+</script>
 
-    <script src="js/index.js"
-            defer></script>
+<script id="service-filter-template"
+        type="text/x-handlebars-template">
+    {{#each this}}
+    <label>
+        <input type="checkbox" class="service-checkbox" value="{{libelle}}"> {{libelle}}
+    </label>
+    {{/each}}
+</script>
+
+<script src="js/index.js"
+        defer></script>
 </body>
 
 </html>
