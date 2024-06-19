@@ -6,7 +6,7 @@ import { displayPersonnes } from './personneModule.js';
 //     document.querySelector("#templateDetailPersonne").innerHTML
 // );
 
-export async function fetchAndSortPersons(order) {
+async function fetchAndSortPersons(order) {
     try {
         const response = await fetch(`${URL_API_BASE}/api/personnes?sort=nom-${order}`);
         const data = await response.json();

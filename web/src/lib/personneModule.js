@@ -43,10 +43,13 @@ export function displayPersonnes(personnes) {
 
 export async function filterByService(serviceId) {
     try {
-        console.log(serviceId)
+        if(serviceId==-1){
+            fetchPersonnes();
+            return;
+        }
+
         const response = await fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
         const personnes = await response.json();
-        console.log(personnes);
         displayPersonnes(personnes.data.services[0].personnes);
     } catch (error) {
         console.error('Error fetching personnes:', error);
@@ -67,6 +70,9 @@ function addServicesInSelect(services) {
     const serviceSelect = document.getElementById('service-select');
     const serviceTemplateSource = document.getElementById('service-template').innerHTML;
     const serviceTemplate = Handlebars.compile(serviceTemplateSource);
+
+    services.unshift({ id:-1, libelle:"Not Selected" });
+    console.log(services);
 
     const html = serviceTemplate({ services });
     serviceSelect.innerHTML = html;

@@ -5806,6 +5806,10 @@
     return __async(this, null, function* () {
       try {
         console.log(serviceId);
+        if (serviceId == -1) {
+          fetchPersonnes();
+          return;
+        }
         const response = yield fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
         const personnes = yield response.json();
         console.log(personnes);
@@ -5830,6 +5834,8 @@
     const serviceSelect = document.getElementById("service-select");
     const serviceTemplateSource = document.getElementById("service-template").innerHTML;
     const serviceTemplate = import_handlebars2.default.compile(serviceTemplateSource);
+    services.unshift({ id: -1, libelle: "Not Selected" });
+    console.log(services);
     const html = serviceTemplate({ services });
     serviceSelect.innerHTML = html;
   }
