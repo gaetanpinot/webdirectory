@@ -18,8 +18,29 @@ class GetPersonneByName extends AbstractAction
         try {
             $personnes = $annuaireService->getPersonnesContainName($searchQuery);
             $data = compact('personnes');
+            $dataAfterFiltering = ['personnes' => []];
+            foreach ($data['personnes'] as $e) {
+                $service = [];
+                foreach ($e['service'] as $s) {
+                    $service[] = [
+                        'id' => $s['id'],
+                        'libelle' => $s['libelle'],
+                        'links' => ['detail' => "/api/services/{$s['id']}"]
+                    ];
+                }
+                $dataAfterFiltering['personnes'][] = [
+                    'id' => $e['id'],
+                    'nom' => $e['nom'],
+                    'prenom' => $e['prenom'],
+                    'url_img' => $e['url_img'],
+                    'services' => $service,
+                    'links' => ['detail' => "/api/personnes/{$e['id']}"]
 
-            $jsonData = json_encode(['type' => 'resource', 'data' => $data]);
+                ];
+
+
+            }
+            $jsonData = json_encode(['type' => 'resource', 'data' => $dataAfterFiltering]);
             $response->getBody()->write($jsonData);
             return $response
                 ->withHeader('Content-Type', 'application/json')
