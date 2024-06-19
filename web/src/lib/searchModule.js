@@ -1,5 +1,6 @@
 import { URL_API_BASE } from "./config";
 import { displayPersonnes } from "./personneModule";
+import { setptrie } from "./sortPersonne";
 
 
 export function addSearchEventListener(){
@@ -23,6 +24,7 @@ export async function filterByName(name) {
         const personnes = data.data.personnes.filter(personne => {
             return personne.nom.toLowerCase().startsWith(name);
         });
+        setptrie(personnes);
         displayPersonnes(personnes);
     } catch (error) {
         console.error('Erreur lors de la recherche par nom :', error);

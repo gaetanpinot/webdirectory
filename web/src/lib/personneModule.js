@@ -2,6 +2,7 @@ import Handlebars from 'handlebars';
 import { URL_API_PERSONNES } from './config.js';
 import { URL_API_BASE } from './config.js';
 import {addEventListnerDetailPersonne} from "./detailPersonne";
+import { setptrie } from './sortPersonne.js';
 
 export function addSelectEventListener(){
     const serviceSelect = document.getElementById('service-select');
@@ -18,7 +19,10 @@ export async function fetchPersonnes() {
     try {
         const response = await fetch(URL_API_PERSONNES);
         const data = await response.json();
+
+
         const personnes = data.data.personnes;
+        setptrie(personnes);
         
         displayPersonnes(personnes);
     } catch (error) {
@@ -26,15 +30,15 @@ export async function fetchPersonnes() {
     }
 }
 
-export function displayPersonnes(personnes) {
-    console.log(personnes);
+export function displayPersonnes(personnesDisp) {
+    console.log(personnesDisp);
     const container = document.getElementById('personnes-list');
     container.innerHTML = '';
 
     const source = document.getElementById('personne-template').innerHTML;
     const template = Handlebars.compile(source);
 
-    personnes.forEach(personne => {
+    personnesDisp.forEach(personne => {
         const html = template(personne);
         container.innerHTML += html;
     });
@@ -49,8 +53,10 @@ export async function filterByService(serviceId) {
         }
 
         const response = await fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
-        const personnes = await response.json();
-        displayPersonnes(personnes.data.services[0].personnes);
+        const resp = await response.json();
+        const personnes = resp.data.services[0].personnes
+        setptrie(personnes)
+        displayPersonnes(personnes);
     } catch (error) {
         console.error('Error fetching personnes:', error);
     }

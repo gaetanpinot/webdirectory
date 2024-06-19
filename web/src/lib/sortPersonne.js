@@ -1,10 +1,16 @@
 import { URL_API_BASE } from './config.js';
 import { displayPersonnes } from './personneModule.js';
-// import Handlebars from 'handlebars';
 
-// const templatePersonneDetail = Handlebars.compile(
-//     document.querySelector("#templateDetailPersonne").innerHTML
-// );
+let personnesTrie=[];
+export function setptrie(personnes){
+    personnesTrie = personnes;
+}
+
+function sort(order){
+    if(order == 'asc')
+        return personnesTrie.sort( (a, b) =>  a.nom.localeCompare(b.nom) );
+    return personnesTrie.sort( (a, b) =>  b.nom.localeCompare(a.nom) );
+}
 
 async function fetchAndSortPersons(order) {
     try {
@@ -23,7 +29,8 @@ export function addSortEventListeners() {
 
     sortAscButton.addEventListener('click', async () => {
         try {
-            const personnes = await fetchAndSortPersons('asc');
+            // const personnes = await fetchAndSortPersons('asc');
+            const personnes = sort('asc');
             displayPersonnes(personnes);
         } catch (error) {
             console.error('Erreur lors du tri ascendant :', error);
@@ -32,7 +39,8 @@ export function addSortEventListeners() {
 
     sortDescButton.addEventListener('click', async () => {
         try {
-            const personnes = await fetchAndSortPersons('desc');
+            // const personnes = await fetchAndSortPersons('desc');
+            const personnes = sort('desc');
             displayPersonnes(personnes);
         } catch (error) {
             console.error('Erreur lors du tri descendant :', error);

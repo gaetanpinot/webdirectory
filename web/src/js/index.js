@@ -5768,6 +5768,37 @@
     });
   }
 
+  // lib/sortPersonne.js
+  var personnesTrie = [];
+  function setptrie(personnes) {
+    personnesTrie = personnes;
+  }
+  function sort(order) {
+    if (order == "asc")
+      return personnesTrie.sort((a, b) => a.nom.localeCompare(b.nom));
+    return personnesTrie.sort((a, b) => b.nom.localeCompare(a.nom));
+  }
+  function addSortEventListeners() {
+    const sortAscButton = document.getElementById("sort-asc");
+    const sortDescButton = document.getElementById("sort-desc");
+    sortAscButton.addEventListener("click", () => __async(this, null, function* () {
+      try {
+        const personnes = sort("asc");
+        displayPersonnes(personnes);
+      } catch (error) {
+        console.error("Erreur lors du tri ascendant :", error);
+      }
+    }));
+    sortDescButton.addEventListener("click", () => __async(this, null, function* () {
+      try {
+        const personnes = sort("desc");
+        displayPersonnes(personnes);
+      } catch (error) {
+        console.error("Erreur lors du tri descendant :", error);
+      }
+    }));
+  }
+
   // lib/personneModule.js
   function addSelectEventListener() {
     const serviceSelect = document.getElementById("service-select");
@@ -5784,19 +5815,20 @@
         const response = yield fetch(URL_API_PERSONNES);
         const data = yield response.json();
         const personnes = data.data.personnes;
+        setptrie(personnes);
         displayPersonnes(personnes);
       } catch (error) {
         console.error("Erreur lors de la r\xE9cup\xE9ration des donn\xE9es:", error);
       }
     });
   }
-  function displayPersonnes(personnes) {
-    console.log(personnes);
+  function displayPersonnes(personnesDisp) {
+    console.log(personnesDisp);
     const container = document.getElementById("personnes-list");
     container.innerHTML = "";
     const source = document.getElementById("personne-template").innerHTML;
     const template = import_handlebars2.default.compile(source);
-    personnes.forEach((personne) => {
+    personnesDisp.forEach((personne) => {
       const html = template(personne);
       container.innerHTML += html;
     });
@@ -5805,15 +5837,15 @@
   function filterByService(serviceId) {
     return __async(this, null, function* () {
       try {
-        console.log(serviceId);
         if (serviceId == -1) {
           fetchPersonnes();
           return;
         }
         const response = yield fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
-        const personnes = yield response.json();
-        console.log(personnes);
-        displayPersonnes(personnes.data.services[0].personnes);
+        const resp = yield response.json();
+        const personnes = resp.data.services[0].personnes;
+        setptrie(personnes);
+        displayPersonnes(personnes);
       } catch (error) {
         console.error("Error fetching personnes:", error);
       }
@@ -5859,45 +5891,12 @@
         const personnes = data.data.personnes.filter((personne) => {
           return personne.nom.toLowerCase().startsWith(name);
         });
+        setptrie(personnes);
         displayPersonnes(personnes);
       } catch (error) {
         console.error("Erreur lors de la recherche par nom :", error);
       }
     });
-  }
-
-  // lib/sortPersonne.js
-  function fetchAndSortPersons(order) {
-    return __async(this, null, function* () {
-      try {
-        const response = yield fetch(`${URL_API_BASE}/api/personnes?sort=nom-${order}`);
-        const data = yield response.json();
-        return data.data.personnes;
-      } catch (error) {
-        console.error("Erreur lors de la r\xE9cup\xE9ration et du tri des personnes :", error);
-        return [];
-      }
-    });
-  }
-  function addSortEventListeners() {
-    const sortAscButton = document.getElementById("sort-asc");
-    const sortDescButton = document.getElementById("sort-desc");
-    sortAscButton.addEventListener("click", () => __async(this, null, function* () {
-      try {
-        const personnes = yield fetchAndSortPersons("asc");
-        displayPersonnes(personnes);
-      } catch (error) {
-        console.error("Erreur lors du tri ascendant :", error);
-      }
-    }));
-    sortDescButton.addEventListener("click", () => __async(this, null, function* () {
-      try {
-        const personnes = yield fetchAndSortPersons("desc");
-        displayPersonnes(personnes);
-      } catch (error) {
-        console.error("Erreur lors du tri descendant :", error);
-      }
-    }));
   }
 
   // index.js
