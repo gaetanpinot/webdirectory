@@ -5744,7 +5744,20 @@
 
   // lib/detailPersonne.js
   var import_handlebars = __toESM(require_handlebars());
+  var templatePersonneDetail = import_handlebars.default.compile(
+    document.querySelector("#templateDetailPersonne").innerHTML
+  );
   function getDetailPersonne(uri) {
+    let urlDetailPersonne = URL_API_BASE + uri;
+    fetch(urlDetailPersonne).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((personne) => {
+            document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(personne.data.personne);
+          });
+        }
+      }
+    );
   }
   function addEventListnerDetailPersonne() {
     document.querySelectorAll(".personne").forEach((e) => {
