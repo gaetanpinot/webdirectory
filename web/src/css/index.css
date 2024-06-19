@@ -1,3 +1,37 @@
 .personne {
     border: 1px solid black;
 }
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+#personnes-container {
+    margin: 1em;
+    height: 85vh;
+    width: 65vw;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.personne {
+    background-color: lightcyan;
+    margin: 0.5em;
+    padding: 0.5em;
+}
+
+#detailPersonne {
+    margin: 1em;
+    width: 20vw;
+    /*width:30%*/
+}
+
+#imgUser {
+    width: 20vw;
+}
+
+body {}

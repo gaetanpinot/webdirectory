@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function filterByName(name) {
     try {
+        
         const response = await fetch(`${URL_API_BASE}/api/personnes`);
         const data = await response.json();
         const personnes = data.data.personnes.filter(personne => {

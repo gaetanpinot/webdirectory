@@ -19,6 +19,7 @@ RewriteRule ^api(/.*)?$ index.php [L]
 # Redirige les requetes vers la localhost:44000/ vers web/index.html
 RewriteRule ^$ web/index.html [L]
 
+#RewriteRule ^css/(.*)\.css$ web/css/$1.css [L]
+
 RewriteRule ^js/(.*)\.js$ web/js/$1.js [L]
 
-RewriteRule ^css/(.*)\.css$ web/css/$1.css [L]
