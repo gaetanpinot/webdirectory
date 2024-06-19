@@ -5734,7 +5734,7 @@
       module.exports = exports["default"];
     }
   });
-
+    
   // lib/personneModule.js
   var import_handlebars2 = __toESM(require_handlebars());
 
@@ -5814,6 +5814,42 @@
     } catch (error) {
         console.error('Erreur lors de la recherche par nom :', error);
     }
+  }
+
+
+  // lib/sortModule.js
+  document.addEventListener('DOMContentLoaded', function () {
+      const sortAscButton = document.getElementById('sort-asc');
+      const sortDescButton = document.getElementById('sort-desc');
+
+      sortAscButton.addEventListener('click', async function () {
+          try {
+              const personnes = await fetchAndSortPersons('asc');
+              displayPersonnes(personnes);
+          } catch (error) {
+              console.error('Erreur lors du tri ascendant :', error);
+          }
+      });
+
+      sortDescButton.addEventListener('click', async function () {
+          try {
+              const personnes = await fetchAndSortPersons('desc');
+              displayPersonnes(personnes);
+          } catch (error) {
+              console.error('Erreur lors du tri descendant :', error);
+          }
+      });
+  });
+
+  async function fetchAndSortPersons(order) {
+      try {
+          const response = await fetch(`${URL_API_BASE}/api/personnes?sort=nom-${order}`);
+          const data = await response.json();
+          return data.data.personnes;
+      } catch (error) {
+          console.error('Erreur lors de la récupération et du tri des personnes :', error);
+          return [];
+      }
   }
 
   // index.js

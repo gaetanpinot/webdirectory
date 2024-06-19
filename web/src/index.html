@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet"
           href="web/css/index.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>webdirectory</title>
 </head>
 
@@ -13,6 +15,7 @@
     <select id="service-select">
 
     </select>
+
     <section id="personnes-list">
 
     </section>
@@ -37,21 +40,13 @@
     </div>
 </script>
 
-<script src="js/index.js"
-        defer></script>
+
 
 <div id="search-container">
     <label for="search-input">Rechercher par nom :</label>
     <input type="text" id="search-input" placeholder="Entrez le nom">
 </div>
 
-<div>
-    <label for="service-filter">Filtrer par service:</label>
-    <div id="service-filter-container"></div>
-    <button id="select-all">Select all</button>
-    <button id="deselect-all">Deselect all</button>
-</div>
-<div id="entries-container"></div>
 
 <script id="templateDetailPersonne" type="text/x-handlebars-template">
     <img src="{{url_img}}" id="imgUser" alt="imageutilisateur">
@@ -66,6 +61,20 @@
     </div>
 
 </script>
+
+<div id="sort-icons">
+    <i id="sort-asc" class="fas fa-sort-alpha-up" title="Tri ascendant"></i>
+    <i id="sort-desc" class="fas fa-sort-alpha-down" title="Tri descendant"></i>
+</div>
+
+
+<div>
+    <label for="service-filter">Filtrer par service:</label>
+    <div id="service-filter-container"></div>
+    <button id="select-all">Select all</button>
+    <button id="deselect-all">Deselect all</button>
+</div>
+<div id="entries-container"></div>
 
 <script id="service-filter-template"
         type="text/x-handlebars-template">
@@ -85,8 +94,10 @@
 
     </div>
 </main>
+
 <script src="js/index.js"
         defer></script>
+
 </body>
 
 </html>
