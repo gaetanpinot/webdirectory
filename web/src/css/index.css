@@ -17,6 +17,15 @@ main {
     overflow: auto;
 }
 
+#boutonRecherche{
+    background-color: lightcyan;
+    border:solid cyan;
+    border-radius: 0.4em;
+    padding: 0.2em;
+    margin:0.2em;
+    width:fit-content;
+}
+
 .personne {
     background-color: lightcyan;
     margin: 0.5em;
