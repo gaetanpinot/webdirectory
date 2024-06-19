@@ -37,17 +37,23 @@
 
     <script src="js/index.js"
             defer></script>
-<div>
-    <label for="service-filter">Filtrer par service:</label>
-    <div id="service-filter-container"></div>
-    <button id="select-all">Select all</button>
-    <button id="deselect-all">Deselect all</button>
-</div>
-<div id="entries-container"></div>
 
-<div id="detailPersonne">
+    <div id="search-container">
+        <label for="search-input">Rechercher par nom :</label>
+        <input type="text" id="search-input" placeholder="Entrez le nom">
+    </div> 
+            
+    <div>
+        <label for="service-filter">Filtrer par service:</label>
+        <div id="service-filter-container"></div>
+        <button id="select-all">Select all</button>
+        <button id="deselect-all">Deselect all</button>
+    </div>
+    <div id="entries-container"></div>
 
-</div>
+    <div id="detailPersonne">
+
+    </div>
 <script id="templateDetailPersonne" type="text/x-handlebars-template">
         <img src="{{url_img}}" alt="image utilisateur">
         <div id="nomDetailPersonne">{{ nom }}</div>
