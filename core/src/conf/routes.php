@@ -15,7 +15,6 @@ use web\api\app\actions\GetPersonneByService;
 use web\api\app\actions\GetService;
 use web\api\app\actions\GetTelephonesByPersonne;
 use web\api\app\actions\Racine;
-use web\api\app\actions\RacineHtml;
 
 
 return function (App $app): App {
