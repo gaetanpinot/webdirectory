@@ -5761,37 +5761,33 @@
       try {
         const response = yield fetch(URL_API_PERSONNES);
         const data = yield response.json();
-        const personnes2 = data.data.personnes;
-        displayPersonnes(personnes2);
+        const personnes = data.data.personnes;
+        displayPersonnes(personnes);
       } catch (error) {
         console.error("Erreur lors de la r\xE9cup\xE9ration des donn\xE9es:", error);
       }
     });
   }
-  function displayPersonnes(personnes2) {
-    console.log(personnes2);
+  function displayPersonnes(personnes) {
+    console.log(personnes);
     const container = document.getElementById("personnes-list");
     container.innerHTML = "";
     const source = document.getElementById("personne-template").innerHTML;
     const template = import_handlebars2.default.compile(source);
-    personnes2.forEach((personne) => {
+    personnes.forEach((personne) => {
       const html = template(personne);
       container.innerHTML += html;
     });
     addEventListnerDetailPersonne();
-  }
-  function displayPersonnesFilteredByService(data) {
-    console.log(data);
-    displayPersonnes(personnes);
   }
   function filterByService(serviceId) {
     return __async(this, null, function* () {
       try {
         console.log(serviceId);
         const response = yield fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
-        const personnes2 = yield response.json();
-        console.log(personnes2);
-        displayPersonnesFilteredByService(personnes2.data.services[0]);
+        const personnes = yield response.json();
+        console.log(personnes);
+        displayPersonnes(personnes.data.services[0].personnes);
       } catch (error) {
         console.error("Error fetching personnes:", error);
       }

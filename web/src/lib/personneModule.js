@@ -36,7 +36,7 @@ export async function filterByService(serviceId) {
         const response = await fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
         const personnes = await response.json();
         console.log(personnes);
-        displayPersonnesFilteredByService(personnes.data.services[0].personnes);
+        displayPersonnes(personnes.data.services[0].personnes);
     } catch (error) {
         console.error('Error fetching personnes:', error);
     }
