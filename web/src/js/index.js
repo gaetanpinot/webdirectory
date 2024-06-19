@@ -5769,6 +5769,15 @@
   }
 
   // lib/personneModule.js
+  function addSelectEventListener() {
+    const serviceSelect = document.getElementById("service-select");
+    serviceSelect.addEventListener("change", () => {
+      const selectedServiceId = serviceSelect.value;
+      if (selectedServiceId) {
+        filterByService(selectedServiceId);
+      }
+    });
+  }
   function fetchPersonnes() {
     return __async(this, null, function* () {
       try {
@@ -5806,13 +5815,6 @@
       }
     });
   }
-  function addServicesInSelect(services) {
-    const serviceSelect2 = document.getElementById("service-select");
-    const serviceTemplateSource = document.getElementById("service-template").innerHTML;
-    const serviceTemplate = import_handlebars2.default.compile(serviceTemplateSource);
-    const html = serviceTemplate({ services });
-    serviceSelect2.innerHTML = html;
-  }
   function fetchServices() {
     return __async(this, null, function* () {
       try {
@@ -5824,19 +5826,81 @@
       }
     });
   }
-  function init() {
-    fetchServices();
-    fetchPersonnes();
+  function addServicesInSelect(services) {
+    const serviceSelect = document.getElementById("service-select");
+    const serviceTemplateSource = document.getElementById("service-template").innerHTML;
+    const serviceTemplate = import_handlebars2.default.compile(serviceTemplateSource);
+    const html = serviceTemplate({ services });
+    serviceSelect.innerHTML = html;
+  }
+
+  // lib/searchModule.js
+  function addSearchEventListener() {
+    document.addEventListener("DOMContentLoaded", function() {
+      const searchInput = document.getElementById("search-input");
+      console.log(searchInput);
+      searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        filterByName(searchTerm);
+      });
+    });
+  }
+  function filterByName(name) {
+    return __async(this, null, function* () {
+      try {
+        const response = yield fetch(`${URL_API_BASE}/api/personnes`);
+        const data = yield response.json();
+        const personnes = data.data.personnes.filter((personne) => {
+          return personne.nom.toLowerCase().startsWith(name);
+        });
+        displayPersonnes(personnes);
+      } catch (error) {
+        console.error("Erreur lors de la recherche par nom :", error);
+      }
+    });
+  }
+
+  // lib/sortPersonne.js
+  function fetchAndSortPersons(order) {
+    return __async(this, null, function* () {
+      try {
+        const response = yield fetch(`${URL_API_BASE}/api/personnes?sort=nom-${order}`);
+        const data = yield response.json();
+        return data.data.personnes;
+      } catch (error) {
+        console.error("Erreur lors de la r\xE9cup\xE9ration et du tri des personnes :", error);
+        return [];
+      }
+    });
+  }
+  function addSortEventListeners() {
+    const sortAscButton = document.getElementById("sort-asc");
+    const sortDescButton = document.getElementById("sort-desc");
+    sortAscButton.addEventListener("click", () => __async(this, null, function* () {
+      try {
+        const personnes = yield fetchAndSortPersons("asc");
+        displayPersonnes(personnes);
+      } catch (error) {
+        console.error("Erreur lors du tri ascendant :", error);
+      }
+    }));
+    sortDescButton.addEventListener("click", () => __async(this, null, function* () {
+      try {
+        const personnes = yield fetchAndSortPersons("desc");
+        displayPersonnes(personnes);
+      } catch (error) {
+        console.error("Erreur lors du tri descendant :", error);
+      }
+    }));
   }
 
   // index.js
-  var serviceSelect = document.getElementById("service-select");
-  serviceSelect.addEventListener("change", () => {
-    const selectedServiceId = serviceSelect.value;
-    if (selectedServiceId) {
-      filterByService(selectedServiceId);
-    }
-  });
-  init();
+  (function() {
+    fetchServices();
+    fetchPersonnes();
+    addSortEventListeners();
+    addSelectEventListener();
+    addSearchEventListener();
+  })();
 })();
 //# sourceMappingURL=index.js.map

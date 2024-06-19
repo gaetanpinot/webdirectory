@@ -4,7 +4,7 @@ import Handlebars from "handlebars";
 const templatePersonneDetail = Handlebars.compile(
     document.querySelector("#templateDetailPersonne").innerHTML);
 
-export function getDetailPersonne(uri) {
+function getDetailPersonne(uri) {
     let urlDetailPersonne = URL_API_BASE + uri;
     fetch(urlDetailPersonne).then((response) => {
             if (response.status === 200) {

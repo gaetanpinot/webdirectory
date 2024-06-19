@@ -1,9 +1,10 @@
 import { URL_API_BASE } from './config.js';
-import Handlebars from 'handlebars';
+import { displayPersonnes } from './personneModule.js';
+// import Handlebars from 'handlebars';
 
-const templatePersonneDetail = Handlebars.compile(
-    document.querySelector("#templateDetailPersonne").innerHTML
-);
+// const templatePersonneDetail = Handlebars.compile(
+//     document.querySelector("#templateDetailPersonne").innerHTML
+// );
 
 export async function fetchAndSortPersons(order) {
     try {
@@ -16,7 +17,7 @@ export async function fetchAndSortPersons(order) {
     }
 }
 
-export function addSortEventListeners(displayPersonnes) {
+export function addSortEventListeners() {
     const sortAscButton = document.getElementById('sort-asc');
     const sortDescButton = document.getElementById('sort-desc');
 

@@ -1,14 +1,14 @@
-import { fetchPersonnes, filterByService } from "./lib/personneModule";
-import { init } from "./lib/personneModule";
+import { fetchPersonnes, filterByService, fetchServices } from "./lib/personneModule";
+import { filterByName } from "./lib/searchModule";
+import { addSortEventListeners } from "./lib/sortPersonne";
+import { addSelectEventListener } from "./lib/personneModule";
+import { addSearchEventListener } from "./lib/searchModule";
 
-
-const serviceSelect = document.getElementById('service-select');
-
-serviceSelect.addEventListener('change', () => {
-    const selectedServiceId = serviceSelect.value;
-    if (selectedServiceId) {
-        filterByService(selectedServiceId);
-    }
-});
-
-init();
+//init
+(function (){
+    fetchServices();
+    fetchPersonnes();
+    addSortEventListeners();
+    addSelectEventListener();
+    addSearchEventListener();
+})();

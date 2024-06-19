@@ -3,6 +3,17 @@ import { URL_API_PERSONNES } from './config.js';
 import { URL_API_BASE } from './config.js';
 import {addEventListnerDetailPersonne} from "./detailPersonne";
 
+export function addSelectEventListener(){
+    const serviceSelect = document.getElementById('service-select');
+
+    serviceSelect.addEventListener('change', () => {
+        const selectedServiceId = serviceSelect.value;
+        if (selectedServiceId) {
+            filterByService(selectedServiceId);
+        }
+    });
+}
+
 export async function fetchPersonnes() {
     try {
         const response = await fetch(URL_API_PERSONNES);
@@ -15,7 +26,7 @@ export async function fetchPersonnes() {
     }
 }
 
-function displayPersonnes(personnes) {
+export function displayPersonnes(personnes) {
     console.log(personnes);
     const container = document.getElementById('personnes-list');
     container.innerHTML = '';
@@ -42,16 +53,7 @@ export async function filterByService(serviceId) {
     }
 }
 
-function addServicesInSelect(services) {
-    const serviceSelect = document.getElementById('service-select');
-    const serviceTemplateSource = document.getElementById('service-template').innerHTML;
-    const serviceTemplate = Handlebars.compile(serviceTemplateSource);
-
-    const html = serviceTemplate({ services });
-    serviceSelect.innerHTML = html;
-}
-
-async function fetchServices() {
+export async function fetchServices() {
     try {
         const response = await fetch(`${URL_API_BASE}/api/services`);
         const services = await response.json();
@@ -61,7 +63,12 @@ async function fetchServices() {
     }
 }
 
-export function init(){
-    fetchServices();
-    fetchPersonnes();
+function addServicesInSelect(services) {
+    const serviceSelect = document.getElementById('service-select');
+    const serviceTemplateSource = document.getElementById('service-template').innerHTML;
+    const serviceTemplate = Handlebars.compile(serviceTemplateSource);
+
+    const html = serviceTemplate({ services });
+    serviceSelect.innerHTML = html;
 }
+
