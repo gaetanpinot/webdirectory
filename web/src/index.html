@@ -68,7 +68,7 @@
     <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
     <div id="nomDetailPersonne">{{ nom }}</div>
     <div id="prenomDetailPersonne">{{ prenom }}</div>
-    <div id="mailDetailPersonne">{{ mail }}</div>
+    <a href="mailto:{{mail}}" id="mailDetailPersonne">{{ mail }}</a>
     <div id="num_bureauDetailPersonne">{{ num_bureau }}</div>
     <div id="serviceDetailPersonne">
         {{#each services}}
