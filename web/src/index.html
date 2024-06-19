@@ -21,26 +21,27 @@
        title="Tri descendant"></i>
 </div>
 
-<div id="search-container">
+<form id="search-container">
     <label for="search-input">Rechercher par nom :</label>
     <input type="text"
            id="search-input"
            placeholder="Entrez le nom">
-</div>
+    <label for="service-select">Service</label><select id="service-select">
+
+</select>
+    <input type="submit" value="Rechercher les personnes">
+</form>
 
 
 <main>
-<div>
-    <select id="service-select">
+    <div>
 
-    </select>
+        <div id="personnes-list">
 
-    <div id="personnes-list">
-
+        </div>
     </div>
-</div>
 
-<div id="detailPersonne"></div>
+    <div id="detailPersonne"></div>
 </main>
 
 <script id="personne-template"
