@@ -6,8 +6,12 @@ class Service {
 
   factory Service.fromJson(Map<String, dynamic> json) {
     return Service(
-        libelle: json['libelle'],
         id: json['id'],
+        libelle: json['libelle'],
         serviceUrl: json['links']['detail']);
+  }
+
+  getLibelle() {
+    return libelle;
   }
 }

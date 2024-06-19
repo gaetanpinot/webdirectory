@@ -104,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
               _selectedService!.isNotEmpty &&
               _selectedService != "Aucun")
           ? names
-              .where((detail) => detail.service.libelle == _selectedService)
+              .where((detail) => detail.service
+                  .any((service) => service.libelle == _selectedService))
               .toList()
           : names;
       if (_searchText.isNotEmpty) {
@@ -178,7 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Detail> getListPersSearch(String? service) {
     filteredNames = names
-        .where((Detail detail) => detail.service.libelle == _selectedService)
+        .where((detail) => detail.service
+            .any((service) => service.libelle == _selectedService))
         .toList();
     return filteredNames;
   }

@@ -7,7 +7,7 @@ class Personne {
   final int id;
   final String nom;
   final String prenom;
-  final Service service;
+  final List<Service> service;
   late String imageUrl;
   final String numBur;
   final String email;
@@ -31,7 +31,7 @@ class Personne {
       id: json['id'],
       nom: json['nom'],
       prenom: json['prenom'],
-      service: Service.fromJson(json['service']),
+      service: [Service.fromJson(json['services'])],
       imageUrl: json['links']['detail'],
       numBur: json['numBur'],
       email: json['email'],
@@ -46,13 +46,5 @@ class Personne {
 
   getPrenom() {
     return prenom;
-  }
-
-  getServiceLibelle() {
-    return service.libelle;
-  }
-
-  getServiceUrl() {
-    return service.serviceUrl;
   }
 }

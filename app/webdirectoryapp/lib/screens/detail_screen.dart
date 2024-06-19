@@ -41,7 +41,12 @@ class DetailScreen extends StatelessWidget {
               'Service / département :',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text(personne!.service.libelle),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: personne!.service
+                  .map((service) => Text(service.libelle))
+                  .toList(),
+            ),
             const SizedBox(height: 16.0),
             const Text(
               'Email :',
