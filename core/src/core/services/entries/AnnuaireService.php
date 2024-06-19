@@ -29,7 +29,7 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getPersonneById(int $id, $publie = true): array
     {
         try {
-            $personne = Personne::where('id', '=', $id)->with('service','fonction','telephone');
+            $personne = Personne::where('id', '=', $id)->with('service', 'fonction', 'telephone');
             if ($publie) {
                 $personne = $personne->where('publie', '=', true);
             }
@@ -130,17 +130,17 @@ class AnnuaireService implements AnnuaireServiceInterface
     }
 
 
-    public function getPersonnesByServices(mixed $id, $publie = true)
+    public function getPersonnesByServices(mixed $id, $search = '', $publie = true)
     {
         try {
-            $personnes = Service::where('id', '=', $id)->with('personnes.service');
+            $personnes = Service::where('id', '=', $id);
+            $personnes = $personnes->with(['personnes' => function ($query) use ($publie,$search) {
+                if ($publie) {
+                    $query->where('publie', '=', 1)
+                        ->where('nom', 'LIKE', '%' . $search . '%');
+                }
+            }, 'personnes.service'])->get();
 
-            if ($publie) {
-                $personnes->whereHas('personnes', function ($query) {
-                    $query->where('publie', '=', true);
-                });
-            }
-            $personnes = $personnes->get();
 
             return $personnes->toArray();
         } catch (QueryException $e) {

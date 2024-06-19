@@ -14,7 +14,13 @@ class GetPersonneByService extends AbstractAction
     {
         $annuaireService = new AnnuaireService();
         try {
-            $services = $annuaireService->getPersonnesByServices($args['id']);
+            if(isset($_GET['search-name'])){
+                $search=$_GET['search-name'];
+//                var_dump($search);
+            }else{
+                $search='';
+            }
+            $services = $annuaireService->getPersonnesByServices($args['id'],search:$search);
             $data = compact('services');
 //            var_dump($data);
             $dataAfterFiltering = ['services' => []];
