@@ -5739,7 +5739,7 @@
   var import_handlebars2 = __toESM(require_handlebars());
 
   // lib/config.js
-  var URL_API_BASE = "http://localhost:44000";
+  var URL_API_BASE = "http://docketu.iutnc.univ-lorraine.fr:44000";
   var URL_API_PERSONNES = URL_API_BASE + "/api/personnes?sort=nom-asc";
 
   // lib/detailPersonne.js
