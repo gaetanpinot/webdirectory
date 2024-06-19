@@ -19,11 +19,16 @@ main {
 
 #boutonRecherche{
     background-color: lightcyan;
-    border:solid cyan;
+    border:solid cyan 1px;
     border-radius: 0.4em;
-    padding: 0.2em;
+    padding: 0.3em;
     margin:0.2em;
     width:fit-content;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+#boutonRecherche:hover{
+    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24),0 9px 30px 0 rgba(0,0,0,0.19);
 }
 
 .personne {
@@ -41,5 +46,7 @@ main {
 #imgUser {
     width: 20vw;
 }
-
+#search-container{
+    margin: 1em;
+}
 body {}
