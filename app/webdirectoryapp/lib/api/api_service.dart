@@ -14,7 +14,6 @@ class ApiService {
       final Personne liste;
       final response = await _dio.get(baseUrl + url);
       if (response.statusCode == 200) {
-        print(response.data['data']['personne']['fonctions']);
         var telephone = response.data['data']['personne']['telephones'] ?? "";
         var telephoneList = (telephone as List<dynamic>)
             .map((item) => item.toString())
@@ -24,7 +23,10 @@ class ApiService {
             .map((item) => Fonction.fromJson(item))
             .toList();
         var personne = response.data['data']['personne'];
-        var service = response.data['data']['personne']['service'] ?? "";
+        var service = response.data['data']['personne']['services'] ?? "";
+        var serviceList = (service as List<dynamic>)
+            .map((item) => Service.fromJson(item))
+            .toList();
         Personne personneMap = Personne(
           id: personne['id'],
           nom: personne['nom'],
@@ -32,14 +34,10 @@ class ApiService {
           email: personne['mail'],
           numBur: personne['num_bureau'],
           imageUrl: personne['url_img'] ?? "",
-          service: Service(
-              libelle: service['libelle'],
-              id: service['id'],
-              serviceUrl: service['links']['detail']),
+          service: serviceList,
           numTel: telephoneList.map((e) => Telephone(tel: e)).toList(),
           fonction: fonctionList,
         );
-        print(personneMap.fonction.length);
         liste = personneMap;
         return liste;
       } else {
@@ -55,27 +53,26 @@ class ApiService {
 
     try {
       final response = await _dio.get(url);
-      //print(response.data['data']['personnes']);
       if (response.statusCode == 200) {
         List<Detail> personnesList = [];
 
         var data = response.data['data']['personnes'];
-
-        for (var personne in data) {
-          if (personne['service'].isEmpty) {
-            personne['service'].add({'libelle': ''});
+        for (int i = 0; i < data.length; i++) {
+          var personne = data[i];
+          if (personne['services'].isEmpty) {
+            personne['services'].add({'libelle': ''});
           }
+          var service = response.data['data']['personnes'][i]['services'] ?? "";
 
-          var service = personne['service'][0] ?? "";
+          var serviceList = (service as List<dynamic>)
+              .map((item) => Service.fromJson(item))
+              .toList();
           Detail personneMap = Detail(
             id: personne['id'],
             nom: personne['nom'],
             prenom: personne['prenom'],
+            service: serviceList,
             imgUrl: personne['url_img'] ?? "",
-            service: Service(
-                libelle: service['libelle'],
-                id: service['id'],
-                serviceUrl: service['links']['detail']),
             personneUrl: personne['links']['detail'],
           );
           personnesList.add(personneMap);
