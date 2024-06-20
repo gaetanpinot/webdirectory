@@ -5,16 +5,16 @@ const templatePersonneDetail = Handlebars.compile(
     document.querySelector("#templateDetailPersonne").innerHTML);
 
 async function getDetailPersonne(uri) {
+    document.querySelector('#detailPersonne').innerHTML = `<div class="spinner"><img class="spin" src="./img/loading.png"></div>`;
+
     let urlDetailPersonne = URL_API_BASE + uri;
-    let response = await fetch(urlDetailPersonne);
-    if (response.status === 200) {
-        let personne = await response.json();
+
+    fetch(urlDetailPersonne)
+    .then( (resp) => resp.json( ))
+    .then( (data)=>{ 
         document.querySelector('#detailPersonne').innerHTML
-            = templatePersonneDetail(personne.data.personne);
-
-    }
-
-
+        = templatePersonneDetail(data.data.personne); 
+    });
 }
 
 export function addEventListnerDetailPersonne() {

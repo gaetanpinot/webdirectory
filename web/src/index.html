@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <header>
         <h1>Webdirectory</h1>
         <div id="elt-head">
@@ -39,23 +38,29 @@
     </header>
 
     <main>
-        <div>
-            <div id="personnes-list">
-
-            </div>
-        </div>
-
         <div id="detailPersonne"></div>
     </main>
+
+
+    <div id="personnes-list"></div>
+
 
     <script id="personne-template"
             type="text/x-handlebars-template">
         <div class="personne">
-            <p><strong>Nom:</strong> {{nom}}</p>
-            <p><strong>Prénom:</strong> {{prenom}}</p>
-            <p><strong>Services:</strong> {{#each services}}
-                {{this.libelle}}
-                {{/each}}</p>
+            <div class="col">
+                <p><strong>Nom:</strong> {{nom}}</p>
+                <p><strong>Prénom:</strong> {{prenom}}</p>
+                <p><strong>Services:</strong> {{#each services}}
+                    {{this.libelle}}
+                    {{/each}}</p>
+            </div>
+
+            <div class="col persImg">
+                <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
+            </div>
+            
+
             <input type="hidden" value="{{links.detail}}">
         </div>
     
@@ -68,45 +73,67 @@
         {{/each}}
     </script>
 
-
     <script id="templateDetailPersonne"
             type="text/x-handlebars-template">
-    <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
-    <div id="nomDetailPersonne">
-        <span class="labelDetail" id="labelPrenomDetailNom">Nom :</span>
-        {{ nom }}
-    </div>
-    <div id="prenomDetailPersonne">
-        <span class="labelDetail" id="labelPrenomDetailPrenom">Prenom :</span>
-        {{ prenom }}
-    </div>
-    <a href="mailto:{{mail}}" id="mailDetailPersonne">{{ mail }}</a>
-    <div id="numTelephoneDetailPersonne">
-        <div class="labelDetail" id="labelNumTelephone">Numero de telephone :</div>
-        <div id="listeNumero">
-            {{#each telephones}}
-            {{this}}<br>
-            {{/each}}
+
+    <article class="detailPers">
+        <div class="imgPers">
+            <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
         </div>
-    </div>
-    <div id="fonctionsDetailPersonne">
-        <div class="labelDetail" id="labelFonction">Fonctions :</div>
-        {{#each fonctions}}
-        {{this.libelle}}<br>
-        {{/each}}
-    </div>
-    <div id="num_bureauDetailPersonne">
-        <span class="labelDetail" id="labelNumBureauDetail">Numero de bureau :</span>
-        {{ num_bureau }}
-    </div>
-        <div id="serviceDetailPersonne">
-            <div class="labelDetail" id="labelServicesDetail">
-                Services :
+
+        <div class="infosPers col">
+                
+            <div id="nomDetailPersonne">
+                <span class="labelDetail" id="labelPrenomDetailNom">Nom :</span>
+                {{ nom }}
             </div>
-            {{#each services}}
-            {{this.libelle}}
-            {{/each}}
+
+            <div id="prenomDetailPersonne">
+                <span class="labelDetail" id="labelPrenomDetailPrenom">Prenom :</span>
+                {{ prenom }}
+            </div>
+
+            <div id="num_bureauDetailPersonne">
+                <span class="labelDetail" id="labelNumBureauDetail">Numero de bureau :</span>
+                {{ num_bureau }}
+            </div>
+
+            <a href="mailto:{{mail}}" id="mailDetailPersonne">{{ mail }}</a>
+
+            <div id="numTelephoneDetailPersonne">
+                <div class="labelDetail" id="labelNumTelephone">Numero de telephone :</div>
+                <div id="listeNumero">
+                    {{#each telephones}}
+                    {{this}}<br>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div id="fonctionsDetailPersonne">
+                <div class="labelDetail" id="labelFonction">Fonctions :</div>
+                {{#each fonctions}}
+                {{this.libelle}}<br>
+                {{/each}}
+
+                <!-- <div class="labelDetail" id="labelFonction">Fonctions :</div>
+                {{#each fonctions}}
+                {{this.libelle}}<br>
+                {{/each}} -->
+            </div>            
+
+            <div id="serviceDetailPersonne">
+                <div class="labelDetail" id="labelServicesDetail">
+                        Services :
+                    </div>
+                    {{#each services}}
+                    {{this.libelle}}
+                    {{/each}}
+            </div>
+
         </div>
+    </article>
+
+    
 </script>
 
     <script id="service-filter-template"
