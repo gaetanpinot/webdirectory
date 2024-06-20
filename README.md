@@ -1,13 +1,13 @@
 # webdirectory
 Sae 4.01 KOLER PINOT PRYKHODKO TERRAS
 
-gaetanpinot => Gaëtan PINOT
+gaetanpinot $\rightarrow$ Gaëtan PINOT
 
-YehorPrykhodko => Yehor PRYKHODKO
+YehorPrykhodko $\rightarrow$ Yehor PRYKHODKO
 
-YxallaxY => Maxime KOLER
+YxallaxY $\rightarrow$ Maxime KOLER
 
-lina-trs => Lina TERRAS
+lina-trs $\rightarrow$ Lina TERRAS
 
 ## Setup
 Créer le fichier `.env` à paritr de `modele.env` à la racine du `docker-compose.yml`, il contient le mot de passe root de la base de donnée et le login de l'utilisateur (attention par défaut l'utilisateur n'a pas de droit)  
