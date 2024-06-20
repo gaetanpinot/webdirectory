@@ -40,6 +40,14 @@ main {
     box-shadow: 0 4px 6px 0 rgba(0,0,0,0.24),0 7px 15px 0 rgba(0,0,0,0.19);
 }
 
+#sort-icons{
+    margin: 1em;
+}
+.fas{
+    font-size: 2em;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+}
 .personne {
     background-color: lightcyan;
     margin: 0.5em;
