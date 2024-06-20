@@ -1,11 +1,11 @@
 # webdirectory
 Sae 4.01 KOLER PINOT PRYKHODKO TERRAS
 
+YxallaxY $\rightarrow$ Maxime KOLER
+
 gaetanpinot $\rightarrow$ Gaëtan PINOT
 
 YehorPrykhodko $\rightarrow$ Yehor PRYKHODKO
-
-YxallaxY $\rightarrow$ Maxime KOLER
 
 lina-trs $\rightarrow$ Lina TERRAS
 
