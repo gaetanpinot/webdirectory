@@ -7,7 +7,8 @@ import 'package:webdirectoryapp/models/telephone.dart';
 import '../models/service.dart';
 
 class ApiService {
-  final baseUrl = 'http://localhost:44000';
+  // final baseUrl= 'http://localhost:44000';
+  final baseUrl = 'http://docketu.iutnc.univ-lorraine.fr:44000';
   final Dio _dio = Dio();
   Future<Personne> getDetailPersonne(String url) async {
     try {
@@ -49,7 +50,7 @@ class ApiService {
   }
 
   Future<List<Detail>> getNames() async {
-    String url = 'http://localhost:44000/api/personnes';
+    String url = '$baseUrl/api/personnes';
 
     try {
       final response = await _dio.get(url);
@@ -87,7 +88,7 @@ class ApiService {
   }
 
   Future<List<Service>> getServices() async {
-    String url = 'http://localhost:44000/api/services';
+    String url = '$baseUrl/api/services';
 
     try {
       final response = await _dio.get(url);

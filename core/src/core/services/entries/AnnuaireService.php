@@ -154,7 +154,7 @@ class AnnuaireService implements AnnuaireServiceInterface
     public function getPersonnesContainName(string $name, $publie = true)
     {
         try {
-            $personnes = Personne::where('nom', 'like', '%' . $name . '%');
+            $personnes = Personne::where('nom', 'like', '%' . $name . '%')->with('service');
             if ($publie) {
                 $personnes = $personnes->where('publie', '=', true);
             }

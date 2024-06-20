@@ -4,18 +4,17 @@ import Handlebars from "handlebars";
 const templatePersonneDetail = Handlebars.compile(
     document.querySelector("#templateDetailPersonne").innerHTML);
 
-function getDetailPersonne(uri) {
+async function getDetailPersonne(uri) {
     let urlDetailPersonne = URL_API_BASE + uri;
-    fetch(urlDetailPersonne).then((response) => {
-            if (response.status === 200) {
-                response.json().then((personne) => {
-                    document.querySelector('#detailPersonne').innerHTML
-                        = templatePersonneDetail(personne.data.personne);
-                });
+    let response = await fetch(urlDetailPersonne);
+    if (response.status === 200) {
+        let personne = await response.json();
+        document.querySelector('#detailPersonne').innerHTML
+            = templatePersonneDetail(personne.data.personne);
 
-            }
-        }
-    )
+    }
+
+
 }
 
 export function addEventListnerDetailPersonne() {

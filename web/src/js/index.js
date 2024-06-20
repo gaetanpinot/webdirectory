@@ -5748,16 +5748,14 @@
     document.querySelector("#templateDetailPersonne").innerHTML
   );
   function getDetailPersonne(uri) {
-    let urlDetailPersonne = URL_API_BASE + uri;
-    fetch(urlDetailPersonne).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((personne) => {
-            document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(personne.data.personne);
-          });
-        }
+    return __async(this, null, function* () {
+      let urlDetailPersonne = URL_API_BASE + uri;
+      let response = yield fetch(urlDetailPersonne);
+      if (response.status === 200) {
+        let personne = yield response.json();
+        document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(personne.data.personne);
       }
-    );
+    });
   }
   function addEventListnerDetailPersonne() {
     document.querySelectorAll(".personne").forEach((e) => {
@@ -5770,13 +5768,13 @@
 
   // lib/sortPersonne.js
   var personnesTrie = [];
-  function setptrie(personnes) {
+  function setPersonneTrie(personnes) {
     personnesTrie = personnes;
   }
   function sort(order) {
-    if (order == "asc")
-      return personnesTrie.sort((a, b) => a.nom.localeCompare(b.nom));
-    return personnesTrie.sort((a, b) => b.nom.localeCompare(a.nom));
+    if (order === "asc")
+      return personnesTrie.sort((a, b) => b.nom.localeCompare(a.nom));
+    return personnesTrie.sort((a, b) => a.nom.localeCompare(b.nom));
   }
   function addSortEventListeners() {
     const sortAscButton = document.getElementById("sort-asc");
@@ -5800,22 +5798,13 @@
   }
 
   // lib/personneModule.js
-  function addSelectEventListener() {
-    const serviceSelect = document.getElementById("service-select");
-    serviceSelect.addEventListener("change", () => {
-      const selectedServiceId = serviceSelect.value;
-      if (selectedServiceId) {
-        filterByService(selectedServiceId);
-      }
-    });
-  }
   function fetchPersonnes() {
     return __async(this, null, function* () {
       try {
         const response = yield fetch(URL_API_PERSONNES);
         const data = yield response.json();
         const personnes = data.data.personnes;
-        setptrie(personnes);
+        setPersonneTrie(personnes);
         displayPersonnes(personnes);
       } catch (error) {
         console.error("Erreur lors de la r\xE9cup\xE9ration des donn\xE9es:", error);
@@ -5823,7 +5812,6 @@
     });
   }
   function displayPersonnes(personnesDisp) {
-    console.log(personnesDisp);
     const container = document.getElementById("personnes-list");
     container.innerHTML = "";
     const source = document.getElementById("personne-template").innerHTML;
@@ -5833,23 +5821,6 @@
       container.innerHTML += html;
     });
     addEventListnerDetailPersonne();
-  }
-  function filterByService(serviceId) {
-    return __async(this, null, function* () {
-      try {
-        if (serviceId == -1) {
-          fetchPersonnes();
-          return;
-        }
-        const response = yield fetch(`${URL_API_BASE}/api/services/${serviceId}/personnes`);
-        const resp = yield response.json();
-        const personnes = resp.data.services[0].personnes;
-        setptrie(personnes);
-        displayPersonnes(personnes);
-      } catch (error) {
-        console.error("Error fetching personnes:", error);
-      }
-    });
   }
   function fetchServices() {
     return __async(this, null, function* () {
@@ -5867,34 +5838,62 @@
     const serviceTemplateSource = document.getElementById("service-template").innerHTML;
     const serviceTemplate = import_handlebars2.default.compile(serviceTemplateSource);
     services.unshift({ id: -1, libelle: "Not Selected" });
-    console.log(services);
     const html = serviceTemplate({ services });
     serviceSelect.innerHTML = html;
   }
 
   // lib/searchModule.js
+  var searchBar;
+  var selectService;
   function addSearchEventListener() {
-    document.addEventListener("DOMContentLoaded", function() {
-      const searchInput = document.getElementById("search-input");
-      console.log(searchInput);
-      searchInput.addEventListener("input", function() {
-        const searchTerm = searchInput.value.trim().toLowerCase();
-        filterByName(searchTerm);
-      });
+    searchBar = document.querySelector("#search-input");
+    searchBar.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        rechercheHandler();
+      }
+    });
+    document.querySelector("#boutonRecherche").addEventListener("click", (e) => {
+      rechercheHandler();
+    });
+    selectService = document.querySelector("#service-select");
+  }
+  function rechercheHandler() {
+    return __async(this, null, function* () {
+      let termeRecherche = searchBar.value;
+      let idServiceSelect = selectService.value;
+      let listePersonnes;
+      if (Number(idServiceSelect) === -1) {
+        listePersonnes = yield searchName(termeRecherche);
+      } else {
+        listePersonnes = yield searchNameAndService(idServiceSelect, termeRecherche);
+      }
+      displayPersonnes(listePersonnes);
+      setPersonneTrie(listePersonnes);
     });
   }
-  function filterByName(name) {
+  function searchName(nom) {
     return __async(this, null, function* () {
       try {
-        const response = yield fetch(`${URL_API_BASE}/api/personnes`);
-        const data = yield response.json();
-        const personnes = data.data.personnes.filter((personne) => {
-          return personne.nom.toLowerCase().startsWith(name);
-        });
-        setptrie(personnes);
-        displayPersonnes(personnes);
-      } catch (error) {
-        console.error("Erreur lors de la recherche par nom :", error);
+        let response = yield fetch(`${URL_API_BASE}/api/personnes/search?q=${nom}`);
+        let data = yield response.json();
+        let personnes = data.data.personnes;
+        return personnes;
+      } catch (e) {
+        console.error("erreur de fetch des personnes avec nom");
+        return [];
+      }
+    });
+  }
+  function searchNameAndService(idService, nom) {
+    return __async(this, null, function* () {
+      try {
+        let response = yield fetch(`${URL_API_BASE}/api/services/${idService}/personnes?search-name=${nom}`);
+        let data = yield response.json();
+        let personnes = data.data.services[0].personnes;
+        return personnes;
+      } catch (e) {
+        console.error("erreur de fetch des personnes de service avec nom");
+        return [];
       }
     });
   }
@@ -5904,7 +5903,6 @@
     fetchServices();
     fetchPersonnes();
     addSortEventListeners();
-    addSelectEventListener();
     addSearchEventListener();
   })();
 })();
