@@ -68,15 +68,41 @@
 <script id="templateDetailPersonne"
         type="text/x-handlebars-template">
     <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
-    <div id="nomDetailPersonne">{{ nom }}</div>
-    <div id="prenomDetailPersonne">{{ prenom }}</div>
+    <div id="nomDetailPersonne">
+        <span class="labelDetail" id="labelPrenomDetailNom">Nom :</span>
+        {{ nom }}
+    </div>
+    <div id="prenomDetailPersonne">
+        <span class="labelDetail" id="labelPrenomDetailPrenom">Prenom :</span>
+        {{ prenom }}
+    </div>
     <a href="mailto:{{mail}}" id="mailDetailPersonne">{{ mail }}</a>
-    <div id="num_bureauDetailPersonne">{{ num_bureau }}</div>
-    <div id="serviceDetailPersonne">
-        {{#each services}}
-        {{this.libelle}}
+    <div id="numTelephoneDetailPersonne">
+        <div class="labelDetail" id="labelNumTelephone">Numero de telephone :</div>
+        <div id="listeNumero">
+            {{#each telephones}}
+            {{this}}<br>
+            {{/each}}
+        </div>
+    </div>
+    <div id="fonctionsDetailPersonne">
+        <div class="labelDetail" id="labelFonction">Fonctions :</div>
+        {{#each fonctions}}
+        {{this.libelle}}<br>
         {{/each}}
     </div>
+    <div id="num_bureauDetailPersonne">
+        <span class="labelDetail" id="labelNumBureauDetail">Numero de bureau :</span>
+        {{ num_bureau }}
+    </div>
+        <div id="serviceDetailPersonne">
+            <div class="labelDetail" id="labelServicesDetail">
+                Services :
+            </div>
+            {{#each services}}
+            {{this.libelle}}
+            {{/each}}
+        </div>
 </script>
 
 <script id="service-filter-template"
