@@ -14,40 +14,39 @@
 <body>
 
 
-<div id="search-container">
-    <label for="search-input">Rechercher par nom :</label>
-    <input type="text"
-           id="search-input"
-           placeholder="Entrez le nom">
-    <label for="service-select">Service</label>
-    <select id="service-select">
+    <div id="search-container">
+        <label for="search-input">Rechercher par nom :</label>
+        <input type="text"
+               id="search-input"
+               placeholder="Entrez le nom">
+        <label for="service-select">Service</label>
+        <select id="service-select">
 
-    </select>
-    <button id="boutonRecherche"> Rechercher les personnes</button>
-</div>
-
-
-<main>
-    <div>
-
-        <div id="sort-icons">
-            <i id="sort-asc"
-               class="fas fa-sort-alpha-up"
-               title="Tri ascendant"></i>
-            <i id="sort-desc"
-               class="fas fa-sort-alpha-down"
-               title="Tri descendant"></i>
-        </div>
-        <div id="personnes-list">
-
-        </div>
+        </select>
+        <button id="boutonRecherche"> Rechercher les personnes</button>
     </div>
 
-    <div id="detailPersonne"></div>
-</main>
 
-<script id="personne-template"
-        type="text/x-handlebars-template">
+    <main>
+        <div>
+            <div id="sort-icons">
+                <i id="sort-asc"
+                   class="fas fa-sort-alpha-up"
+                   title="Tri ascendant"></i>
+                <i id="sort-desc"
+                   class="fas fa-sort-alpha-down"
+                   title="Tri descendant"></i>
+            </div>
+            <div id="personnes-list">
+
+            </div>
+        </div>
+
+        <div id="detailPersonne"></div>
+    </main>
+
+    <script id="personne-template"
+            type="text/x-handlebars-template">
     <div class="personne">
         <p><strong>Nom:</strong> {{nom}}</p>
         <p><strong>Prénom:</strong> {{prenom}}</p>
@@ -58,16 +57,16 @@
     </div>
 </script>
 
-<script id="service-template"
-        type="text/x-handlebars-template">
+    <script id="service-template"
+            type="text/x-handlebars-template">
     {{#each services}}
     <option value="{{id}}">{{libelle}}</option>
     {{/each}}
 </script>
 
 
-<script id="templateDetailPersonne"
-        type="text/x-handlebars-template">
+    <script id="templateDetailPersonne"
+            type="text/x-handlebars-template">
     <img src="{{url_img}}" alt="image utilisateur" id="imgUser">
     <div id="nomDetailPersonne">
         <span class="labelDetail" id="labelPrenomDetailNom">Nom :</span>
@@ -106,8 +105,8 @@
         </div>
 </script>
 
-<script id="service-filter-template"
-        type="text/x-handlebars-template">
+    <script id="service-filter-template"
+            type="text/x-handlebars-template">
     {{#each this}}
     <label>
         <input type="checkbox" class="service-checkbox" value="{{libelle}}"> {{libelle}}
@@ -115,8 +114,8 @@
     {{/each}}
 </script>
 
-<script src="js/index.js"
-        defer></script>
+    <script src="js/index.js"
+            defer></script>
 </body>
 
 </html>

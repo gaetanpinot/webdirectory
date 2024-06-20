@@ -1,9 +1,10 @@
 .personne {
     border: 1px solid black;
-    cursor:pointer;
+    cursor: pointer;
 }
-.personne:hover{
-    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24),0 9px 30px 0 rgba(0,0,0,0.19);
+
+.personne:hover {
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 9px 30px 0 rgba(0, 0, 0, 0.19);
 
 }
 
@@ -13,7 +14,7 @@ main {
     justify-content: space-between;
 }
 
-#personnes-list{
+#personnes-list {
     margin: 1em;
     height: 85vh;
     width: 65vw;
@@ -22,32 +23,36 @@ main {
     overflow: auto;
 }
 
-#boutonRecherche{
+#boutonRecherche {
     background-color: lightcyan;
-    border:solid cyan 1px;
+    border: solid cyan 1px;
     border-radius: 0.4em;
     padding: 0.3em;
-    margin:0.2em;
-    width:fit-content;
+    margin: 0.2em;
+    width: fit-content;
     cursor: pointer;
     transition-duration: 0.2s;
     position: relative;
 }
-#boutonRecherche:active{
-    top:1px;
-}
-#boutonRecherche:hover{
-    box-shadow: 0 4px 6px 0 rgba(0,0,0,0.24),0 7px 15px 0 rgba(0,0,0,0.19);
+
+#boutonRecherche:active {
+    top: 1px;
 }
 
-#sort-icons{
+#boutonRecherche:hover {
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.24), 0 7px 15px 0 rgba(0, 0, 0, 0.19);
+}
+
+#sort-icons {
     margin: 1em;
 }
-.fas{
+
+.fas {
     font-size: 2em;
     margin-left: 0.3em;
     margin-right: 0.3em;
 }
+
 .personne {
     background-color: lightcyan;
     margin: 0.5em;
@@ -63,15 +68,21 @@ main {
 #imgUser {
     width: 20vw;
 }
-#search-container{
+
+#search-container {
     margin: 1em;
 }
+
 body {
     font-family: "Ubuntu", sans-serif;
 }
 
-#numTelephoneDetailPersonne > p{
-}
-.labelDetail{
+.labelDetail {
     font-weight: bold;
 }
+
+#personnes-list::-webkit-scrollbar {
+    display: none;
+}
+
+#numTelephoneDetailPersonne>p {}
