@@ -3,7 +3,7 @@ Sae 4.01 KOLER PINOT PRYKHODKO TERRAS
 
 gaetanpinot $\rightarrow$ Gaëtan PINOT
 
-YehorPrykhodko >$\rightarrow$ Yehor PRYKHODKO
+YehorPrykhodko $\rightarrow$ Yehor PRYKHODKO
 
 YxallaxY $\rightarrow$ Maxime KOLER
 
