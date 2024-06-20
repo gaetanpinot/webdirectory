@@ -1,63 +1,143 @@
-.personne {
-    border: 1px solid black;
-    cursor:pointer;
+* {
+    box-sizing: border-box;
 }
-.personne:hover{
-    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24),0 9px 30px 0 rgba(0,0,0,0.19);
 
+body {
+    margin: 0;
+    overflow: hidden;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.persImg {
+    display: block;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.persImg img {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    height: 100%;
+    width: auto;
+}
+
+.personne {
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid black; */
+    border-radius: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    cursor: pointer;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    background-color: lightcyan;
+    margin-inline: 0.5em;
+
+    padding: 0.5em;
+
+    transition: 0.3s all;
+}
+
+.infosPers {
+    display: flex;
+    flex-direction: column;
+    /* row-gap: 0.25em; */
+    justify-content: space-between;
+    padding-block: 40px;
+
+}
+
+.personne p {
+    width: 150px;
+}
+
+.personne .col {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.personne:hover {
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 9px 30px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.1);
+    margin-inline: 2em;
 }
 
 main {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-#personnes-list{
-    margin: 1em;
-    height: 85vh;
-    width: 65vw;
-    display: flex;
     flex-direction: column;
-    overflow: auto;
+    justify-content: space-between;
+    flex: 1;
+    justify-content: center;
 }
 
-#boutonRecherche{
+#personnes-list {
+    margin: 1em;
+    height: 35vh;
+    width: 97%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    justify-self: flex-end;
+    padding-block: 1em;
+}
+
+#boutonRecherche {
     background-color: lightcyan;
-    border:solid cyan 1px;
-    border-radius: 0.4em;
+    border: solid cyan 1px;
+    border-radius: 1em;
     padding: 0.3em;
-    margin:0.2em;
-    width:fit-content;
+    margin: 0.2em;
+    width: fit-content;
     cursor: pointer;
     transition-duration: 0.2s;
     position: relative;
-}
-#boutonRecherche:active{
-    top:1px;
-}
-#boutonRecherche:hover{
-    box-shadow: 0 4px 6px 0 rgba(0,0,0,0.24),0 7px 15px 0 rgba(0,0,0,0.19);
+    height: 30px;
 }
 
-#sort-icons{
+#boutonRecherche:active {
+    top: 1px;
+}
+
+#boutonRecherche:hover {
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.24), 0 7px 15px 0 rgba(0, 0, 0, 0.19);
+}
+
+#sort-icons {
     margin: 1em;
 }
-.fas{
+
+.fas {
     font-size: 2em;
     margin-left: 0.3em;
     margin-right: 0.3em;
 }
-.personne {
-    background-color: lightcyan;
-    margin: 0.5em;
-    padding: 0.5em;
-}
 
 #detailPersonne {
+    display: flex;
+    width: 100%;
     margin: 1em;
-    width: 20vw;
+    justify-content: center;
+
     /*width:30%*/
+    height: 100%;
+
 }
 
 #imgUser {
@@ -68,13 +148,12 @@ body {
     font-family: "Ubuntu", sans-serif;
 }
 
-#numTelephoneDetailPersonne > p{
-}
-.labelDetail{
+.labelDetail {
     font-weight: bold;
 }
 
 header {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -102,10 +181,11 @@ header h1 {
     gap: 0.5em;
 }
 
-#search-input, #service-select {
+#search-input,
+#service-select {
     padding: 0.5em;
     border: 1px solid #ccc;
-    border-radius: 0.25em;
+    border-radius: 1em;
 }
 
 #sort-icons {
@@ -122,4 +202,28 @@ header h1 {
 
 #sort-icons i:hover {
     color: #333;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+.detailPers {
+    display: flex;
+}
+
+.spin {
+    animation: spin 1s linear 0s infinite forwards;
+    height: 200px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
 }

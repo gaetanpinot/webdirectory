@@ -5749,12 +5749,11 @@
   );
   function getDetailPersonne(uri) {
     return __async(this, null, function* () {
+      document.querySelector("#detailPersonne").innerHTML = `<div class="spinner"><img class="spin" src="./img/loading.png"></div>`;
       let urlDetailPersonne = URL_API_BASE + uri;
-      let response = yield fetch(urlDetailPersonne);
-      if (response.status === 200) {
-        let personne = yield response.json();
-        document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(personne.data.personne);
-      }
+      fetch(urlDetailPersonne).then((resp) => resp.json()).then((data) => {
+        document.querySelector("#detailPersonne").innerHTML = templatePersonneDetail(data.data.personne);
+      });
     });
   }
   function addEventListnerDetailPersonne() {
