@@ -40,6 +40,7 @@ class GetPersonneByService extends AbstractAction
                         'id' => $p['id'],
                         'nom' => $p['nom'],
                         'prenom' => $p['prenom'],
+                        'url_img'=> $p['url_img'],
                         'services'=>$service,
                         'links' => ['detail' => "/api/personnes/{$p['id']}"]
                     ];
