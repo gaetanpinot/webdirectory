@@ -20,6 +20,7 @@ RewriteRule ^api(/.*)?$ index.php [L]
 RewriteRule ^$ web/index.html [L]
 
 RewriteRule ^css/(.*)\.css$ web/css/$1.css [L]
+RewriteRule ^img/(.*)\.png$ web/img/$1.png [L]
 
 RewriteRule ^js/(.*)\.js$ web/js/$1.js [L]
 

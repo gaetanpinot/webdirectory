@@ -140,8 +140,11 @@ main {
 
 }
 
-#imgUser {
+#imgUserDetail {
     width: 20vw;
+}
+.imgUser{
+    height:90%;
 }
 
 body {
