@@ -21,18 +21,16 @@ use web\admin\core\services\auth\Auth;
 
 return function (App $app): App {
 
-    $app->get('/personnes[/]', GetAllPersonne::class)->setName('allPersonnes');
     $app->get('[/]', Racine::class)->setName('racine');
 
     $app->get('/publier/{id}[/]', PublierPersonne::class)->setName('publierPersonne')->add(Auth::class);
-
     $app->get('/depublier/{id}[/]', DepublierPersonne::class)->setName('depublierPersonne')->add(Auth::class);
 
+    $app->get('/personnes[/]', GetAllPersonne::class)->setName('allPersonnes');
     $app->get('/personne/create[/]', GetPersonneCreate::class)->setName('createPersonne')->add(Auth::class);
     $app->post('/personne/create[/]', PostPersonneCreate::class)->add(Auth::class);
 
     $app->get('/admin/create[/]', GetCreateAdmin::class)->setName('createAdmin')->add(Auth::class);
-
     $app->post('/admin/create[/]', PostCreateAdmin::class)->add(Auth::class);
 
     $app->get('/service/create[/]', GetServiceCreate::class)->setName('createService')->add(Auth::class);
