@@ -5,7 +5,7 @@ const templatePersonneDetail = Handlebars.compile(
     document.querySelector("#templateDetailPersonne").innerHTML);
 
 async function getDetailPersonne(uri) {
-    document.querySelector('#detailPersonne').innerHTML = `<div class="spinner"><img class="spin" src="./img/loading.png"></div>`;
+    document.querySelector('#detailPersonne').innerHTML = `<img class="spin" src="./img/loading.png">`;
 
     let urlDetailPersonne = URL_API_BASE + uri;
 
