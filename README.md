@@ -14,7 +14,7 @@ Créer le fichier `.env` à paritr de `modele.env` à la racine du `docker-compo
 Créer le fichier `webdir.db.conf.ini.dist` à partir du template dans le dossier `core/src/conf` de core sur la base du fichier existant pour preciser le login et le mot de passe que vous voulez qu'eloquent utilise pour acceder à la base de donnée (ex: root et le mot de passe que vous avez mis dans le `.env`)  
 Copier ce fichier dans `admin/src/conf` sans le rennomer.  
 Lancer le docker compose  
-Créer la base de donnée `webdir` sur adminer et la remplir avec le fichier `lignes.sql`  
+Créer la base de donnée `webdir` sur adminer et la remplir avec le fichier `lignes.sql`, le nom du serveur db est `webdir.db`, c'est l'alias du serveur sql.  
 L'api l'application web ainsi que l'admin devrait foncionner, il y aura peut être une erreur avec le dossier `cache` dans `admin/src` et `core/src` qui n'est pas crée ou alors qui manque de droit, ajouter les droits à tout le monde avec `chmod 777 admin/src/cache` de meme pour core.  
 
 ## SQL
